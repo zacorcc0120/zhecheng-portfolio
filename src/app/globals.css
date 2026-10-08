@@ -280,7 +280,10 @@ section[id] {
 }
 .desktop-nav {
   display: flex;
-  gap: 32px;
+  /* Three items since LAB was parked. The nav is right-aligned by the header's
+     auto margin, so the freed width would otherwise bunch them against the
+     gutter; a wider gap keeps the same measured rhythm the four-item row had. */
+  gap: 44px;
   font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: uppercase;

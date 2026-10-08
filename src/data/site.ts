@@ -15,7 +15,7 @@ export const site = {
   phoneLabel: "+86 183 3579 2002",
   github: null as string | null,
   linkedin: null as string | null,
-  resume: null as string | null, // e.g. /resume/zhecheng-cao.pdf
+  resume: "/resume/zhecheng-cao-resume.pdf" as string | null,
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
 };
 

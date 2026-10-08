@@ -35,7 +35,7 @@ npm run format    # Prettier 格式化源码
 | `/work/drum-tower`     | 滚动拆解与可调节鼓楼示意模型                  |
 | `/work/recoveryx`      | 评估 / 记录 / 追踪 / 报告结构及交互 Dashboard |
 | `/work/jiko`           | 时间记录、日常回顾、提醒系统与交互计时器       |
-| `/lab`                 | 六个实验入口                                  |
+| `/lab`                 | 六个实验入口（**暂未公开**：导航与 sitemap 已隐藏，页面为 noindex，路由与素材保留） |
 | `/about`               | 个人介绍、教育、分组技能、简历入口            |
 
 ## 维护入口

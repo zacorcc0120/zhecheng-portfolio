@@ -6,13 +6,11 @@ import { site } from "@/data/site";
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    "",
-    "/work",
-    "/lab",
-    "/about",
-    ...projects.map((p) => `/work/${p.slug}`),
-  ].map((path) => ({
+  // "/lab" is deliberately absent while that section is parked — see the noindex
+  // on its page. A route that is not ready for the public must not be advertised
+  // here as a finished part of the site.
+  const paths = ["", "/work", "/about", ...projects.map((p) => `/work/${p.slug}`)];
+  return paths.map((path) => ({
     url: `${site.url}${path}`,
     changeFrequency: "monthly",
     priority: path === "" ? 1 : 0.8,

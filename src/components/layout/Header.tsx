@@ -5,9 +5,14 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 
+// LAB is parked, not removed. Its route, components and experiment data are all
+// still intact and it stays reachable by direct URL; only the public entry points
+// were taken down until the studies are genuinely interactive. Re-enable the line
+// below to bring the section back to both the desktop and the mobile nav, which
+// are both driven by this single array.
 const links = [
   { href: "/work", label: "Work" },
-  { href: "/lab", label: "Lab" },
+  // { href: "/lab", label: "Lab" },
   { href: "/about", label: "About" },
   { href: "/#contact", label: "Contact" },
 ];

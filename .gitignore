@@ -16,5 +16,10 @@ docs/
 tmp/
 *.log
 
+# Resume authoring workspace: source HTML/CSS, portrait, revision notes and a
+# qa/ scratch folder. Only the built PDF under public/resume/ is needed by the
+# site, so the working copy stays out of a public repository.
+career-resume/
+
 # Added by `vercel link`.
 .vercel

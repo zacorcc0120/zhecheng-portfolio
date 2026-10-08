@@ -10,8 +10,13 @@ const nextConfig: NextConfig = {
   // Static hosts get a directory per route; this is what makes `/work` resolve
   // as a directory instead of relying on Pages' extension-less fallback.
   ...(isPages ? { output: "export" as const, trailingSlash: true } : {}),
-  // GitHub Pages publishes this repo at /zhecheng-portfolio, not at the root.
-  ...(isPages ? { basePath: "/zhecheng-portfolio" } : {}),
+  // GitHub Pages serves this repo at /zhecheng-portfolio while it uses the
+  // default *.github.io host. Once the repo owns zhecheng-portfolio.site the
+  // site moves to the root and this must be empty, so it comes from the
+  // environment rather than being baked in.
+  ...(isPages && process.env.NEXT_PUBLIC_BASE_PATH
+    ? { basePath: process.env.NEXT_PUBLIC_BASE_PATH }
+    : {}),
   reactStrictMode: true,
   poweredByHeader: false,
   allowedDevOrigins: ["terminal.local"],

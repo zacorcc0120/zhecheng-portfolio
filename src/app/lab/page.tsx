@@ -11,6 +11,13 @@ export const metadata: Metadata = {
   title: "Lab / Experiments",
   description:
     "Small experiments in generative forms, parametric models, AI workflows and interface design.",
+  // Parked, not deleted. noindex keeps this section out of search results while
+  // the studies are still being made genuinely interactive, so it cannot surface
+  // as a finished body of work. The page still renders for a direct link, which
+  // is why this is metadata and not a redirect. robots.txt deliberately stays
+  // permissive: a Disallow here would stop crawlers fetching the page and they
+  // would never see this tag in the first place.
+  robots: { index: false, follow: false },
 };
 
 export default function Lab() {
