@@ -1,0 +1,60 @@
+name: Deploy to GitHub Pages
+
+# The Vercel deployment is driven by Vercel's own Git integration and is not
+# affected by this workflow. This is the second, independent target: a fully
+# static build that stays reachable from mainland China, where *.vercel.app is
+# DNS-blocked. Switched on by NEXT_OUTPUT_EXPORT alone, so the Vercel build of
+# this same commit is unchanged.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race for the same Pages slot.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+        env:
+          NEXT_OUTPUT_EXPORT: "1"
+          NEXT_PUBLIC_BASE_PATH: "/zhecheng-portfolio"
+          NEXT_PUBLIC_SITE_URL: "https://zacorcc0120.github.io/zhecheng-portfolio"
+
+      # out/ copies all of public/, including plates no page references.
+      - run: node scripts/prune-static-output.mjs out
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
