@@ -1,0 +1,17 @@
+# Upload payload control. The Vercel CLI ships the working tree, not a build,
+# so without this the 400 MB of local design-round scratch would go over the
+# wire on every deploy. None of it is reachable from src/ — verified by grep.
+
+node_modules
+.next
+.git
+
+# Local design rounds, screenshots, asset staging.
+.asset-stage
+shots
+docs
+tmp
+
+*.log
+*.tsbuildinfo
+.vercel
