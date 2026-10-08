@@ -8,7 +8,7 @@ next-env.d.ts
 .DS_Store
 coverage/
 
-# Local working artifacts — design rounds, screenshots, asset staging.
+# Local working artifacts: design rounds, screenshots, asset staging.
 # These are multi-hundred-megabyte scratch directories, not source.
 .asset-stage/
 shots/
@@ -16,5 +16,5 @@ docs/
 tmp/
 *.log
 
+# Added by `vercel link`.
 .vercel
-.env*
