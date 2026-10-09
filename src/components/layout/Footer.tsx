@@ -18,7 +18,10 @@ export function Contact({ compact = false }: { compact?: boolean }) {
   // work rather than as an honest absence.
   const allChannels: Channel[] = [
     {
-      name: "Email",
+      // The address is the label for the same reason the number is one below:
+      // "Email" hides the only string a reader can actually copy out of this
+      // page, and a reader on mobile cannot see a long one under a word.
+      name: site.email ?? "Email",
       href: site.email ? `mailto:${site.email}` : null,
       external: false,
       Icon: ArrowUpRight,
