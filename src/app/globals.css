@@ -11100,459 +11100,463 @@ th {
 }
 
 /* ==========================================================================
-   HOMEPAGE — LIVING SYSTEMS
+   HOMEPAGE — SCULPTURAL COMPUTATION
 
-   Two drawings, one motion language. REGION A (METHOD) is an instrument panel
-   beside its argument; REGION B (RULES INTO POSSIBILITIES) is the second
-   signature motion and the only place on the page where geometry is allowed to
-   take the full width.
+   Two scenes, one surface. The practice section and the RULES study share a
+   single parametric form; what changes between them is the reading, not the
+   object. That is deliberate — the page's argument is that the rules are one
+   system, and two different-looking models would quietly contradict it.
 
-   Both are SVG rather than canvas or WebGL. The content is hairline geometry
-   — rules, nodes, a lattice — and hairline geometry is exactly what SVG draws
-   without a shader, a framebuffer or a dependency. Nothing here is 3D, so
-   nothing here needs a 3D runtime.
+   Composition follows the brief's three layers for the merged section
+   (statement / geometry + argument / disciplines), and the geometry is never
+   framed in a box: it is a solid sitting on the page, held there by a
+   footprint shadow and nothing else.
    ========================================================================== */
 
-:root {
-  --lf-ink: #111111;
-  --lf-mute: #777773;
-  --lf-rule: #9e9e94;
-  --lf-hair: #b2b2a9;
-  --lf-paper: #f2f2ef;
-  --lf-panel: #fafaf7;
+.practice {
+  padding-top: var(--space-chapter);
+  padding-bottom: var(--space-chapter);
 }
 
-/* --- REGION A — METHOD becomes a spread ------------------------------- */
+.practice-statement {
+  font-family: var(--font-display);
+  font-size: var(--t-chapter);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  margin: clamp(20px, 3.4vh, 46px) 0 0;
+}
 
-.method-stage {
+.practice-stage {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--grid-gap);
-  margin-top: clamp(40px, 6vh, 84px);
-}
-
-.method-body {
-  grid-column: 1 / 8;
-  display: grid;
-  align-content: start;
-  gap: clamp(28px, 4.5vh, 52px);
-}
-
-/* The list and the tools used to be two columns of the same grid; stacked in
-   one column they are one register — the method, written out — and the right
-   half of the section is given to the drawing. */
-.method-body > .method-disc,
-.method-body > .method-tools {
-  grid-column: auto;
-}
-
-/* Hovering a domain is the section's only interaction. The row answers with
-   contrast and a short rule, never with a jump. */
-.method-disc li {
-  transition: opacity 220ms var(--ease-inout, ease), color 220ms var(--ease-inout, ease);
-}
-
-.method-disc li.is-dim {
-  opacity: 0.4;
-}
-
-.method-disc li.is-focus .method-disc-name {
-  color: var(--lf-ink);
-}
-
-.method-disc li.is-focus .method-disc-index {
-  color: var(--lf-ink);
-}
-
-/* The tool register is a flat list, not a sequence, so it runs across the full
-   width under both columns. Stacked into the left one it made the left column
-   300px taller than the drawing beside it. */
-.method-stage > .method-tools {
-  grid-column: 1 / -1;
-  margin: clamp(26px, 4vh, 48px) 0 0;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--grid-gap);
-}
-
-.method-stage > .method-tools > div {
-  padding: 14px 0 0;
+  /* Top-aligned, not bottom. The copy is a little shorter than the form, and
+     pushing it to the foot of the row left a 200px hole above it under the
+     headline — the exact "empty region" the section is supposed not to have. */
+  align-items: start;
+  margin-top: clamp(36px, 6vh, 82px);
+  padding-top: var(--space-dense);
   border-top: var(--rule);
 }
 
-/* --- LIVING PROCESS ---------------------------------------------------- */
+.practice-copy {
+  grid-column: 1 / 6;
+}
 
-.living-process {
-  grid-column: 9 / 13;
-  margin: 0;
-  align-self: start;
+.practice-lead {
+  font-size: var(--t-editorial);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-wrap: pretty;
+}
+
+.practice-body {
+  margin-top: clamp(18px, 2.4vh, 30px);
+  color: #3f3f3a;
+  /* Brief §16: the Chinese body copy has been reading small. This is the size
+     the paragraph actually wants, not a token that happens to be smaller. */
+  font-size: clamp(16px, 1.06vw, 18px);
+  line-height: 1.86;
+  text-wrap: pretty;
+}
+
+.practice-note {
+  margin-top: clamp(18px, 2.4vh, 28px);
+  padding-top: 16px;
+  border-top: var(--rule);
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.72;
+  max-width: 40ch;
+  text-wrap: pretty;
+}
+
+.practice-visual {
+  grid-column: 6 / 13;
   position: relative;
-  border: 1px solid var(--lf-hair);
-  background: var(--lf-panel);
-  padding: 12px 14px 10px;
-}
-
-.living-process-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--lf-hair);
-  color: var(--lf-mute);
-  font-size: 10px;
-}
-
-.living-process-canvas {
-  display: block;
-  width: 100%;
-  height: auto;
-  /* A drawing this size never needs a pointer cursor; the hover targets that
-     matter are the four rows in the list beside it. */
-  pointer-events: none;
-}
-
-.lp-label,
-.lp-input,
-.lp-foot,
-.lp-out-label,
-.lp-block-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: var(--tracking-meta, 0.08em);
-  fill: var(--lf-mute);
-}
-
-.lp-input {
-  font-size: 10.5px;
-  fill: var(--lf-ink);
-}
-
-.lp-out-label {
-  font-size: 9px;
-  fill: var(--lf-mute);
-}
-
-.lp-foot {
-  font-size: 9px;
-}
-
-.lp-foot-r {
-  fill: #a5a59d;
-}
-
-.lp-block-label {
-  font-size: 8.5px;
-  fill: var(--lf-ink);
-}
-
-.lp-lead {
-  stroke: var(--lf-rule);
-  stroke-linecap: round;
-}
-
-.lp-node {
-  fill: var(--lf-ink);
-}
-
-.lp-link {
-  fill: none;
-  stroke: var(--lf-rule);
-  stroke-width: 0.8;
-}
-
-.lp-link-out {
-  stroke-dasharray: 2 3;
-}
-
-.lp-spine {
-  stroke: var(--lf-rule);
-  stroke-width: 0.8;
-}
-
-.lp-block {
-  fill: none;
-  stroke: var(--lf-ink);
-  stroke-width: 1;
-}
-
-.lp-scan {
-  fill: var(--lf-accent, #cbd2a7);
-}
-
-.lp-thin {
-  fill: none;
-  stroke: var(--lf-rule);
-  stroke-width: 0.7;
-}
-
-.lp-diag {
-  stroke: #9d9d94;
-}
-
-.lp-tick {
-  stroke: var(--lf-rule);
-  stroke-width: 0.8;
-}
-
-.lp-hollow {
-  fill: none;
-  stroke: var(--lf-ink);
-  stroke-width: 0.9;
-}
-
-.lp-box {
-  fill: none;
-  stroke: var(--lf-rule);
-  stroke-width: 0.8;
-}
-
-.lp-box-alt {
-  stroke: var(--lf-ink);
-}
-
-.lp-rail {
-  stroke: #9d9d94;
-}
-
-.lp-dash-box {
-  fill: none;
-  stroke: var(--lf-hair);
-  stroke-width: 0.7;
-  stroke-dasharray: 3 4;
-}
-
-.lp-arc {
-  fill: none;
-  stroke: var(--lf-rule);
-  stroke-width: 0.7;
-}
-
-.lp-solid {
-  fill: var(--lf-ink);
-}
-
-/* --- REGION B — RULES INTO POSSIBILITIES ------------------------------ */
-
-.quiet {
-  padding-top: var(--space-chapter);
-  padding-bottom: var(--space-chapter);
-  display: grid;
-  /* The old rule centred this section's single flex line. Left in place it also
-     centres a grid column, which sized the plate to its own content and left
-     300px of unused grid on the right — the plate has to take the full field. */
-  grid-template-columns: minmax(0, 1fr);
-  justify-content: stretch;
-  gap: clamp(30px, 4.5vh, 56px);
-}
-
-/* The headline keeps every pixel it had. It is the last statement the page
-   makes before it introduces the person, and the drawing is not allowed to
-   push it around. */
-.quiet-head {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--grid-gap);
-  align-items: end;
-}
-
-.quiet-head .quiet-line {
-  grid-column: 1 / 9;
-}
-
-.quiet-head .quiet-note {
-  grid-column: 9 / 13;
-  margin-top: 0;
-  padding-bottom: 0.6em;
-}
-
-/* --- GENERATIVE FORM FIELD -------------------------------------------- */
-
-.form-field {
-  --q: 0;
-  position: relative;
-  margin: 0;
-  border: 1px solid var(--lf-hair);
-  background: var(--lf-panel);
-  padding: 12px 14px 12px;
-  /* The plate carries its own exit, so nothing here may overflow horizontally
-     at any width. */
   min-width: 0;
 }
 
-.form-field-head {
+.practice-annot {
+  position: absolute;
+  left: 0;
+  bottom: -22px;
+  color: var(--muted);
+}
+
+/* ---- the canvas host ---------------------------------------------------- */
+
+.sculpture {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.sculpture > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.sculpture canvas {
+  display: block;
+  outline: none;
+  touch-action: pan-y;
+}
+
+/* Both frames are proportioned against the object's own silhouette — about 3.1:1
+   seen from the camera's angle — so the form fills the frame instead of floating
+   in it. The wide band is the one the brief calls for: a solid on the page, not
+   a geometry trapped inside a bordered box. */
+.sculpture-practice {
+  aspect-ratio: 1.58;
+}
+
+.sculpture-study {
+  aspect-ratio: 16 / 9;
+}
+
+.sculpture-wait {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+/* ---- the four disciplines as a mode selector ----------------------------- */
+
+.practice-domains {
+  margin-top: clamp(52px, 8vh, 108px);
+  padding-top: clamp(20px, 2.6vh, 34px);
+  border-top: var(--rule);
+}
+
+.practice-domains-head {
   display: flex;
-  justify-content: space-between;
   align-items: baseline;
-  gap: 16px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--lf-hair);
-  color: var(--lf-mute);
-  font-size: 10px;
+  justify-content: space-between;
+  gap: var(--grid-gap);
 }
 
-.form-field-phase {
-  color: var(--lf-ink);
-  font-size: 10px;
+.practice-domains-title {
+  font-family: var(--font-display);
+  font-size: var(--t-editorial);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
 }
 
-.form-field-canvas {
+.practice-hold {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tracking-meta);
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--line);
+  padding: 7px 11px;
+  cursor: pointer;
+  transition:
+    color 200ms var(--ease-out),
+    border-color 200ms var(--ease-out);
+}
+
+.practice-hold:hover,
+.practice-hold:focus-visible {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.practice-list {
+  list-style: none;
+  margin: clamp(14px, 2vh, 26px) 0 0;
+  padding: 0;
+}
+
+.practice-list li {
+  border-bottom: var(--rule);
+}
+
+.practice-item {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto minmax(0, 30ch);
+  gap: 6px var(--grid-gap);
+  align-items: baseline;
+  width: 100%;
+  padding: 20px 12px 22px;
+  margin: 0 -12px;
+  width: calc(100% + 24px);
+  background: none;
+  border: 0;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: background 420ms var(--ease-out);
+}
+
+.practice-item:hover,
+.practice-item:focus-visible {
+  background: var(--panel);
+  outline: none;
+}
+
+.practice-item:focus-visible {
+  box-shadow: inset 2px 0 0 var(--ink);
+}
+
+.practice-item-index {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tracking-meta);
+  color: var(--muted);
+}
+
+.practice-item-name {
+  font-family: var(--font-display);
+  font-size: var(--t-title);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  transition: color 260ms var(--ease-out);
+}
+
+.practice-item-detail {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.practice-item-note {
+  color: #3d3d38;
+  font-size: 15.5px;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+/* The held reading is the one the form is locked to; the reading being pointed
+   at is the one the form is heading to. They are different states and they are
+   shown differently, because they mean different things. */
+.practice-item[data-held="true"] .practice-item-name {
+  color: var(--ink);
+}
+
+.practice-item[data-held="true"] .practice-item-index {
+  color: var(--ink);
+}
+
+.practice-item[data-focus="true"] .practice-item-name,
+.practice-item[data-held="true"] .practice-item-name {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  text-decoration-color: var(--ink);
+}
+
+.practice-tools {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--grid-gap);
+  margin: clamp(44px, 6vh, 78px) 0 0;
+}
+
+.practice-tools > div {
+  padding-top: 16px;
+  border-top: var(--rule);
+}
+
+.practice-tools dt {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.practice-tools dd {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.68;
+  color: #45453f;
+  text-wrap: pretty;
+}
+
+/* ---- 03 / RULES — the structural sculpture ------------------------------ */
+
+.quiet {
+  display: block;
+}
+
+.rules {
+  position: relative;
+  margin-top: clamp(28px, 4.4vh, 62px);
+}
+
+.rules-meta {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  pointer-events: none;
+}
+
+.rules-phase,
+.rules-mode {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tracking-meta);
+}
+
+.rules-phase {
+  color: var(--ink);
+}
+
+.rules-mode {
+  color: var(--muted);
+}
+
+.rules-controls {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  gap: 8px;
+}
+
+.rules-btn {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tracking-meta);
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--line);
+  padding: 7px 12px;
+  cursor: pointer;
+  transition:
+    color 200ms var(--ease-out),
+    border-color 200ms var(--ease-out),
+    background 200ms var(--ease-out);
+}
+
+.rules-btn:hover,
+.rules-btn:focus-visible {
+  color: var(--ink);
+  border-color: var(--ink);
+  outline: none;
+}
+
+.rules-btn[aria-pressed="true"] {
+  color: var(--paper);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.rules-caption {
+  margin-top: clamp(20px, 2.6vh, 34px);
+  max-width: 52ch;
+  color: #3f3f3a;
+  font-size: clamp(16px, 1.02vw, 17px);
+  line-height: 1.82;
+  text-wrap: pretty;
+}
+
+.rules-annot {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: var(--muted);
+}
+
+/* ---- the no-WebGL elevation --------------------------------------------- */
+
+.vault-drawing {
   display: block;
   width: 100%;
   height: auto;
 }
 
-/* Stroke widths are in viewBox units, so the same number that reads as a crisp
-   hairline at 1.3× rasterises to a third of a pixel on a phone and greys the
-   whole drawing out. --ff-widen is the reciprocal of the plate's rendered scale,
-   written by the component; the widths below are the values at 1:1. */
-.ff-frame {
+.vd-ground line {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.vd-plan path {
   fill: none;
-  stroke: var(--lf-hair);
-  stroke-width: calc(0.8px * var(--ff-widen, 1));
+  stroke: var(--muted);
+  stroke-width: 0.9;
+  opacity: 0.75;
 }
 
-.ff-axis {
-  stroke: var(--lf-hair);
-  stroke-width: calc(0.7px * var(--ff-widen, 1));
-  stroke-dasharray: 4 5;
+.vd-plan text,
+.vd-caption {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  fill: var(--muted);
 }
 
-.ff-row {
+.vd-caption-r {
+  text-anchor: end;
+}
+
+.vd-members line {
+  stroke: var(--muted);
+  stroke-width: 0.8;
+}
+
+.vd-spring {
   fill: none;
-  stroke: var(--lf-rule);
-  stroke-width: calc(0.9px * var(--ff-widen, 1));
+  stroke: var(--line);
+  stroke-width: 1;
 }
 
-.ff-rule {
-  fill: none;
-  stroke: var(--lf-hair);
-  stroke-width: calc(0.75px * var(--ff-widen, 1));
-}
-
-.ff-topo {
-  fill: none;
-  stroke: var(--lf-ink);
-  stroke-width: calc(0.55px * var(--ff-widen, 1));
-}
-
-.ff-mass {
-  fill: var(--lf-rule);
+.vd-shell path {
+  fill: var(--panel);
   stroke: none;
 }
 
-.ff-node {
-  fill: var(--lf-ink);
-}
-
-.ff-micro {
-  font-family: var(--font-mono);
-  font-size: 8px;
-  letter-spacing: var(--tracking-meta, 0.08em);
-  fill: #a5a59d;
-}
-
-.ff-control {
+.vd-ribs path {
   fill: none;
-  stroke: var(--lf-mute);
-  stroke-width: calc(0.8px * var(--ff-widen, 1));
+  stroke: var(--ink);
+  stroke-linejoin: round;
 }
 
-.form-field-foot {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-top: 12px;
-  padding-top: 10px;
-  border-top: 1px solid var(--lf-hair);
-}
-
-.form-field-caption {
-  margin: 0;
-  max-width: 42ch;
-  font-size: 13px;
-  line-height: 1.6;
-  color: #3d3d38;
-}
-
-.form-field-controls {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.form-field-mode {
-  min-width: 96px;
-  color: var(--lf-mute);
-  font-size: 10px;
-}
-
-.form-field-btn {
-  padding: 8px 12px;
-  border: 1px solid var(--lf-hair);
-  background: none;
-  color: var(--lf-mute);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: var(--tracking-meta, 0.08em);
-  cursor: pointer;
-  transition:
-    color 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    background-color 220ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.form-field-btn:hover {
-  color: var(--lf-ink);
-  border-color: var(--lf-ink);
-}
-
-.form-field-btn:focus-visible {
-  outline: 1px solid var(--lf-ink);
-  outline-offset: 3px;
-}
-
-.form-field-btn[aria-pressed="true"] {
-  color: var(--lf-ink);
-  border-color: var(--lf-ink);
-  background: rgba(17, 17, 17, 0.04);
-}
-
-/* --- ABOUT — rules that draw, rows that answer ------------------------ */
+/* ---- About micro-interactions ------------------------------------------- */
 
 .home-about-facts li {
   position: relative;
-  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .home-about-facts li::before {
   content: "";
   position: absolute;
-  left: 0;
-  top: -1px;
-  width: 100%;
+  inset: 0 0 auto 0;
   height: 1px;
-  background: var(--lf-ink);
+  background: currentColor;
+  opacity: 0.5;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 420ms var(--ease-out);
 }
 
 .home-about-facts li:hover::before {
   transform: scaleX(1);
 }
 
-.home-about-facts li:hover > span:first-child {
-  color: var(--lf-ink);
-}
-
 .home-about-facts li > span:first-child {
-  transition: color 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 220ms var(--ease-out);
 }
 
-/* --- CONTACT — the quiet ending ---------------------------------------- */
+.home-about-facts li:hover > span:first-child {
+  color: var(--ink);
+}
+
+/* ---- CONTACT — the quiet ending ----------------------------------------- */
 
 .contact-section {
   position: relative;
@@ -11562,8 +11566,8 @@ th {
 
 /* One hairline in the empty band between the headline and the entries, drawn
    from the left when a contact channel is engaged — a connector to the entry
-   row rather than another panel of equally loud buttons. It is anchored to the
-   bottom of the section, not to a percentage of its height: the headline wraps
+   row rather than another panel of equally loud buttons. Anchored to the bottom
+   of the section, not to a percentage of its height: the headline wraps
    differently at every breakpoint, and a rule that lands on the type at one
    width is worse than no rule at all. */
 .contact-section::after {
@@ -11587,11 +11591,7 @@ th {
 }
 
 .contact-links a {
-  transition: color 220ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.contact-links a:hover {
-  color: var(--paper);
+  transition: color 220ms var(--ease-out);
 }
 
 .contact-links a:hover svg {
@@ -11599,8 +11599,9 @@ th {
 }
 
 .contact-links a svg {
-  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 220ms var(--ease-out);
 }
+
 
 /* ==========================================================================
    Reduced motion

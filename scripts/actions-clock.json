@@ -1,0 +1,15 @@
+[
+  "assert:goR=(window.scrollTo(0,document.querySelector('.quiet').getBoundingClientRect().top+scrollY),'r')",
+  "wait:3000",
+  "assert:p0=document.querySelector('.rules-phase').textContent",
+  "wait:4000",
+  "assert:p1=document.querySelector('.rules-phase').textContent",
+  "wait:4000",
+  "assert:p2=document.querySelector('.rules-phase').textContent",
+  "wait:4000",
+  "assert:p3=document.querySelector('.rules-phase').textContent",
+  "wait:4000",
+  "assert:p4=document.querySelector('.rules-phase').textContent",
+  "wait:4000",
+  "assert:p5=document.querySelector('.rules-phase').textContent"
+]

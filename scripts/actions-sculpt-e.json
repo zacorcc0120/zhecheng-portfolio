@@ -1,0 +1,22 @@
+[
+  "wait:2600",
+  "assert:goP=(window.scrollTo(0,document.querySelector('.practice').getBoundingClientRect().top+scrollY),'p')",
+  "wait:3000",
+  "shot:pg-practice-top",
+  "assert:goP2=(window.scrollTo(0,document.querySelector('.practice-domains').getBoundingClientRect().top+scrollY-120),'p2')",
+  "wait:900",
+  "shot:pg-practice-domains",
+  "assert:goR=(window.scrollTo(0,document.querySelector('.quiet').getBoundingClientRect().top+scrollY-20),'r')",
+  "wait:3200",
+  "shot:pg-rules-top",
+  "assert:goR2=(window.scrollTo(0,document.querySelector('.rules-caption').getBoundingClientRect().top+scrollY-460),'r2')",
+  "wait:900",
+  "shot:pg-rules-bottom",
+  "assert:goA=(window.scrollTo(0,document.querySelector('.home-about').getBoundingClientRect().top+scrollY-40),'about')",
+  "wait:900",
+  "shot:pg-about",
+  "assert:goC=(window.scrollTo(0,document.querySelector('.contact-section').getBoundingClientRect().top+scrollY),'contact')",
+  "wait:900",
+  "shot:pg-contact",
+  "assert:heights=JSON.stringify((()=>{const h=e=>e?Math.round(e.getBoundingClientRect().height):null;return {practice:h(document.querySelector('.practice')),stage:h(document.querySelector('.practice-stage')),copy:h(document.querySelector('.practice-copy')),visual:h(document.querySelector('.practice-visual')),domains:h(document.querySelector('.practice-domains')),list:h(document.querySelector('.practice-list')),tools:h(document.querySelector('.practice-tools')),quiet:h(document.querySelector('.quiet')),rules:h(document.querySelector('.rules')),study:h(document.querySelector('.sculpture-study')),caption:h(document.querySelector('.rules-caption'))}})())"
+]

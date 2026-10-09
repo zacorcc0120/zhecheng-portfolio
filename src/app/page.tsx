@@ -4,8 +4,8 @@ import { site } from "@/data/site";
 import { Contact } from "@/components/layout/Footer";
 import { HeroField } from "@/components/home/HeroField";
 import { HeroHeadline } from "@/components/home/HeroHeadline";
-import { MethodIndex } from "@/components/home/MethodIndex";
-import { FormField } from "@/components/home/FormField";
+import { PracticeScene } from "@/components/home/PracticeScene";
+import { RulesStudy } from "@/components/home/RulesStudy";
 import { RuleIndexDivider } from "@/components/home/RuleIndexDivider";
 import { ChapterMarkDivider } from "@/components/home/ChapterMarkDivider";
 import { WorksIndex } from "@/components/home/WorksIndex";
@@ -34,32 +34,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 02 — Dense. Short, specific, sets the vocabulary. */}
-      <section className="manifesto section-shell" id="introduction">
-        <div className="section-kicker">
-          <span>01 / PRACTICE</span>
-          <span>曹哲诚 · 设计学研究生</span>
-        </div>
-        <MaskReveal
-          as="h2"
-          className="manifesto-statement"
-          lineClassName="manifesto-line"
-          lines={["数字产品、参数化建筑", "与计算结构。"]}
-          stagger={0.08}
-        />
-        <div className="manifesto-body">
-          <p className="manifesto-lead">
-            我把设计看成一套可以运行的系统，而不是一组界面。
-          </p>
-          <p>
-            从桂北传统民居的生成式参数化工作流，到微信小程序里的时间记录与日常回顾，
-            再到晶格结构与鼓楼形制的规则提取——对象不同，但都在做同一件事：
-            把模糊的需求变成可命名、可调整的参数，交给系统去生成，再回到人的判断。
-          </p>
-        </div>
-      </section>
-
-      <MethodIndex />
+      {/* 01 + 02 — PRACTICE and METHOD, fused into one scene. They were two
+          separate walls of type with a small instrument panel between them;
+          they are now a statement, a running form, and the four disciplines
+          that drive it. */}
+      <PracticeScene />
 
       {/* The method's own rule chains become the project index. The rail that
           follows is this band's end state, not a separate widget. */}
@@ -90,7 +69,7 @@ export default function Home() {
           </span>
         </div>
 
-        <FormField />
+        <RulesStudy />
       </section>
 
       <section className="home-about section-shell">

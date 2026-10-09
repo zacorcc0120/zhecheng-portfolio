@@ -1,0 +1,10 @@
+[
+  "wait:2600",
+  "assert:goP=(window.scrollTo(0,document.querySelector('.practice').getBoundingClientRect().top+scrollY),'p')",
+  "wait:3000",
+  "clip:sculpt-p-visual=.practice-visual",
+  "assert:goR=(window.scrollTo(0,document.querySelector('.quiet').getBoundingClientRect().top+scrollY),'r')",
+  "wait:3000",
+  "clip:sculpt-r-visual=.rules",
+  "shot:sculpt-r-page"
+]

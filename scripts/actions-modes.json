@@ -1,0 +1,17 @@
+[
+  "assert:goR=(window.scrollTo(0,document.querySelector('.quiet').getBoundingClientRect().top+scrollY),'r')",
+  "wait:1000",
+  "click:.rules-controls .rules-btn:last-child",
+  "wait:600",
+  "assert:paused=document.querySelector('.rules-controls .rules-btn:last-child').getAttribute('aria-pressed')",
+  "wait:3400",
+  "assert:ph=document.querySelector('.rules-phase').textContent",
+  "clip:m-surface=.sculpture-study",
+  "click:.rules-controls .rules-btn:first-child",
+  "wait:2200",
+  "clip:m-structure=.sculpture-study",
+  "click:.rules-controls .rules-btn:first-child",
+  "wait:2200",
+  "clip:m-lattice=.sculpture-study",
+  "assert:mode=document.querySelector('.rules-mode').textContent"
+]

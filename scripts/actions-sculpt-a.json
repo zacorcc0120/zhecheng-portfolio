@@ -1,0 +1,19 @@
+[
+  "wait:3000",
+  "assert:hydrate=JSON.stringify((()=>{const all=[];document.querySelectorAll('*').forEach(e=>{for(const k in e){if(k.indexOf('__reactFiber$')===0)all.push(1);}});const c=document.querySelector('.sculpture canvas');let gl=null;if(c){try{gl=!!(c.getContext('webgl2')||c.getContext('webgl'))}catch(e){gl='err'}}return {fibers:all.length,canvas:!!c,w:c?c.width:0,h:c?c.height:0,gl};})())",
+  "assert:rects=JSON.stringify((()=>{const r=e=>{if(!e)return null;const b=e.getBoundingClientRect();return{t:Math.round(b.top+scrollY),h:Math.round(b.height),w:Math.round(b.width)}};return {practice:r(document.querySelector('.practice')),stage:r(document.querySelector('.practice-stage')),visual:r(document.querySelector('.practice-visual')),quiet:r(document.querySelector('.quiet')),rules:r(document.querySelector('.rules')),about:r(document.querySelector('.home-about')),contact:r(document.querySelector('.contact-section')),doc:document.documentElement.scrollHeight};})())",
+  "assert:goP=(window.scrollTo(0,document.querySelector('.practice').getBoundingClientRect().top+scrollY),'practice')",
+  "wait:2600",
+  "shot:sculpt-practice",
+  "assert:stageProbe=JSON.stringify((()=>{const c=document.querySelector('.practice-visual canvas');if(!c)return{canvas:false};const r=c.getBoundingClientRect();const px=(()=>{try{const g=c.getContext('webgl2')||c.getContext('webgl');const a=new Uint8Array(4);g.readPixels(Math.floor(c.width/2),Math.floor(c.height/2),1,1,g.RGBA,g.UNSIGNED_BYTE,a);return Array.from(a)}catch(e){return 'err:'+e.message}})();return{canvas:true,rect:[Math.round(r.width),Math.round(r.height)],center:px};})())",
+  "shot:sculpt-practice-closeup",
+  "assert:goR=(window.scrollTo(0,document.querySelector('.quiet').getBoundingClientRect().top+scrollY),'quiet')",
+  "wait:2600",
+  "shot:sculpt-rules",
+  "assert:goA=(window.scrollTo(0,document.querySelector('.home-about').getBoundingClientRect().top+scrollY-40),'about')",
+  "wait:900",
+  "shot:sculpt-about",
+  "assert:goC=(window.scrollTo(0,document.querySelector('.contact-section').getBoundingClientRect().top+scrollY),'contact')",
+  "wait:900",
+  "shot:sculpt-contact"
+]
