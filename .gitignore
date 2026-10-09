@@ -21,5 +21,9 @@ tmp/
 # site, so the working copy stays out of a public repository.
 career-resume/
 
+# One-time device-flow output from `gh auth refresh` when it is run with
+# redirected stdout. Transient authorization noise, never source.
+.gh-*.log*
+
 # Added by `vercel link`.
 .vercel
