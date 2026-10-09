@@ -1,0 +1,16 @@
+[
+  "wait:2500",
+  "assert:consoleClean=JSON.stringify({fatal:(window.__errs||[]).length})",
+  "assert:sectionTop=(window.scrollTo(0,document.querySelector('#problem').getBoundingClientRect().top+scrollY-80),'problemTop')",
+  "wait:900",
+  "shot:boundary-above",
+  "assert:sectionBottom=(window.scrollTo(0,document.querySelector('#problem').getBoundingClientRect().top+scrollY+document.querySelector('#problem').getBoundingClientRect().height-700),'problemBottom')",
+  "wait:900",
+  "shot:boundary-below",
+  "assert:neighbours=JSON.stringify({overview:!!document.querySelector('#overview'),problem:!!document.querySelector('#problem'),journey:!!document.querySelector('#time-into-memory'),gallery:!!document.querySelector('#gallery'),tocLinks:[...document.querySelectorAll('.case-index a, .case-toc a')].map(a=>a.getAttribute('href'))})",
+  "assert:journeyStillWorks=(document.querySelector('.jiko-journey-body')?'present':'missing')",
+  "assert:brand=JSON.stringify({jike:(document.body.innerText.match(/迹刻/g)||[]).length,old:(document.body.innerText.match(/逝刻/g)||[]).length})",
+  "assert:noDuplicateId=JSON.stringify((()=>{const ids=[...document.querySelectorAll('[id]')].map(e=>e.id);const dup=ids.filter((v,i)=>ids.indexOf(v)!==i);return [...new Set(dup)];})())",
+  "assert:railFocusable=JSON.stringify([...document.querySelectorAll('.jiko-problems-rail button')].map(b=>b.tagName+':'+b.type))",
+  "assert:svgRoles=JSON.stringify([...document.querySelectorAll('.jiko-problems-body .jiko-problems-canvas')].map(s=>({role:s.getAttribute('role'),labelLen:s.getAttribute('aria-label').length})))"
+]

@@ -27,6 +27,12 @@ import { DrumTowerSystem } from "@/components/project/DrumTowerSystem";
 import { CaseProgress } from "@/components/project/CaseProgress";
 import { CaseHandoff } from "@/components/project/CaseHandoff";
 import { MaskReveal, MaskBlock } from "@/components/motion/MaskReveal";
+import { Collapsible } from "@/components/ui/Collapsible";
+import { JikoHero } from "@/components/project/jiko/JikoHero";
+import { JikoJourney } from "@/components/project/jiko/JikoJourney";
+import { JikoProblems } from "@/components/project/jiko/JikoProblems";
+import { JikoGallery } from "@/components/project/jiko/JikoGallery";
+import { JikoAssistant } from "@/components/project/jiko/JikoAssistant";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -39,19 +45,26 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = findProject(slug);
   if (!project) return { title: "Project not found" };
+  // The Chinese name is part of the project's identity, not a subtitle, so it
+  // belongs in the title and description rather than only in the page body.
+  const isJiko = project.kind === "jiko";
+  const title = isJiko ? `${project.title} 迹刻` : project.title;
+  const description = isJiko
+    ? "迹刻 JIKO 是一款围绕时间记录、日常回顾与事项提醒设计的微信小程序。独立完成产品策划、界面设计、AI 辅助开发与发布准备。"
+    : project.subtitle;
   return {
-    title: project.title,
-    description: project.subtitle,
+    title,
+    description,
     alternates: { canonical: `/work/${slug}` },
     openGraph: {
-      title: `${project.title} — Zhecheng Cao`,
-      description: project.subtitle,
+      title: `${title} — Zhecheng Cao`,
+      description,
       type: "article",
     },
     twitter: {
       card: "summary",
-      title: project.title,
-      description: project.subtitle,
+      title,
+      description,
     },
   };
 }
@@ -127,6 +140,32 @@ export default async function ProjectPage({
     project.sectionFigures?.reflection?.filter(
       (asset) => !asset.path.includes("feature-overview"),
     ) ?? [];
+
+  // The editorial brief used to live inside the case hero. JIKO replaces the
+  // hero with its own composition, so the brief moves into the opening
+  // chapter — where it reads as part of the argument rather than as a header.
+  const caseBrief = editorial ? (
+    <div className="case-brief" aria-label="项目速览">
+      <h2>{editorial.takeaway}</h2>
+      <dl>
+        <div>
+          <dt>我的工作</dt>
+          <dd>{editorial.contribution}</dd>
+        </div>
+        <div>
+          <dt>已有成果</dt>
+          <dd>{editorial.evidence}</dd>
+        </div>
+      </dl>
+      <div className="case-brief-bottom">
+        <p>{editorial.scope}</p>
+        <a href={`#${editorial.evidenceTarget}`} className="text-link">
+          {editorial.evidenceLabel} <ArrowUpRight size={18} />
+        </a>
+      </div>
+    </div>
+  ) : null;
+
   const sections: Record<CaseSectionId, ReactNode> = {
     overview: (
       <section id="overview" className="case-section case-overview">
@@ -138,6 +177,7 @@ export default async function ProjectPage({
           <h2 className="section-heading">{project.question}</h2>
         </MaskBlock>
         <p className="case-lead">{project.overview}</p>
+        {project.kind === "jiko" && caseBrief}
 
         {/* RecoveryX folds its problem statement into this chapter instead of
             giving it a chapter of its own. The reason the product exists is
@@ -179,14 +219,23 @@ export default async function ProjectPage({
                 ? "Recording time should feel effortless."
                 : "空间、尺度与构件需要哪些约束？"}
         </h2>
-        <div className="problem-grid">
-          {project.problem.map((item) => (
-            <article key={item.title}>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-            </article>
-          ))}
-        </div>
+        {project.kind === "jiko" ? (
+          // Three problems, one argument, and a drawing for each. The old
+          // version was three tall empty panels with a rail of hairlines at the
+          // side; the reserved height belonged to an observer and nothing ever
+          // filled it, so the chapter read as whitespace. JikoProblems holds the
+          // instrument on the left and the copy on the right.
+          <JikoProblems />
+        ) : (
+          <div className="problem-grid">
+            {project.problem.map((item) => (
+              <article key={item.title}>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </article>
+            ))}
+          </div>
+        )}
       </section>
     ),
     research: (
@@ -232,12 +281,26 @@ export default async function ProjectPage({
                 editorial ? "research-grid case-decisions" : "research-grid"
               }
             >
-              {(editorial?.decisions ?? project.research).map((item) => (
-                <article key={item.title}>
-                  <h3>{item.title}</h3>
-                  <p>{item.body}</p>
-                </article>
-              ))}
+              {(editorial?.decisions ?? project.research).map((item, i) =>
+                // Only JIKO collapses them. Four long bodies in a row is a wall
+                // of text; four long bodies each behind its own one-line
+                // heading is a set of choices.
+                project.kind === "jiko" ? (
+                  <Collapsible
+                    key={item.title}
+                    label={item.title}
+                    meta={String(i + 1).padStart(2, "0")}
+                    defaultOpen={i === 0}
+                  >
+                    <p>{item.body}</p>
+                  </Collapsible>
+                ) : (
+                  <article key={item.title}>
+                    <h3>{item.title}</h3>
+                    <p>{item.body}</p>
+                  </article>
+                ),
+              )}
             </div>
             {isArchitecture && <CaseFigure asset={plate("01-grammar-of-dwelling")} />}
             {figures("research").map((asset) => (
@@ -436,39 +499,111 @@ export default async function ProjectPage({
           {sectionNumber("outcome")} / OUTCOME & DOCUMENTATION
         </span>
         <h2>{editorial?.outcomeTitle ?? "已搭建的工作流与演示。"}</h2>
-        <ol className="outcomes">
-          {project.outcomes.map((outcome, i) => (
-            <li key={outcome}>
-              <span>{String(i + 1).padStart(2, "0")}</span>
-              {outcome}
-            </li>
-          ))}
-        </ol>
-        {project.kind !== "recovery" && (
-          <div
-            className={
-              project.kind === "tower"
-                ? "assets-grid assets-grid-tower"
-                : "assets-grid"
-            }
-          >
-            {(project.kind === "tower"
-              ? project.assets.filter((asset) =>
-                  asset.path.endsWith("render-octagonal.png"),
-                )
-              : isArchitecture
-                ? []
-                : project.assets
-            ).map((asset) => (
-              <AssetSlot key={asset.path} {...asset} />
-            ))}
-          </div>
-        )}
-        {isArchitecture && (
-          <CaseFigure asset={plate("03-nine-configurations")} ratio="grid" />
+        {/* JIKO closes on a status ledger rather than a numbered list. The
+            list implied six achievements; the ledger separates what runs today
+            from what is designed but unproven, which is the distinction a
+            reader actually needs. */}
+        {project.kind === "jiko" ? (
+          <>
+            <p className="case-lead">
+              迹刻当前处于审核与内部测试阶段。下面区分三件事：已经实现并可运行的、
+              已完成设计但尚未验证的，以及下一阶段仍需改进的。
+            </p>
+            <div className="case-outcome-status">
+              <article className="is-built">
+                <span>Implemented / 已实现</span>
+                <ul>{project.outcomes.map((item) => <li key={item}>{item}</li>)}</ul>
+              </article>
+              <article className="is-designed">
+                <span>Designed / 已设计待验证</span>
+                <ul>
+                  <li>自然语言解析后的日程与待办草稿，需要真实使用检验确认率与修改率。</li>
+                  <li>周回顾的活动分布是否真的改变了回顾行为，尚未有可用数据。</li>
+                  <li>记录频率、提醒到达率与提醒关闭率都还没有长期样本。</li>
+                </ul>
+              </article>
+              <article className="is-open">
+                <span>Still to improve / 待改进</span>
+                <p>
+                  当前最大问题是创建记录的操作成本仍然偏高，计时过程中无法补充描述；
+                  其次是提醒到达率依赖微信订阅消息的授权次数，产品无法自行保证送达。
+                  下一阶段先做更长周期的自用测试，再决定是否调整记录流程与提醒策略。
+                </p>
+              </article>
+            </div>
+          </>
+        ) : (
+          <>
+            <ol className="outcomes">
+              {project.outcomes.map((outcome, i) => (
+                <li key={outcome}>
+                  <span>{String(i + 1).padStart(2, "0")}</span>
+                  {outcome}
+                </li>
+              ))}
+            </ol>
+            {project.kind !== "recovery" && (
+              <div
+                className={
+                  project.kind === "tower"
+                    ? "assets-grid assets-grid-tower"
+                    : "assets-grid"
+                }
+              >
+                {(project.kind === "tower"
+                  ? project.assets.filter((asset) =>
+                      asset.path.endsWith("render-octagonal.png"),
+                    )
+                  : isArchitecture
+                    ? []
+                    : project.assets
+                ).map((asset) => (
+                  <AssetSlot key={asset.path} {...asset} />
+                ))}
+              </div>
+            )}
+            {isArchitecture && (
+              <CaseFigure asset={plate("03-nine-configurations")} ratio="grid" />
+            )}
+          </>
         )}
         {project.video && <ProjectVideo {...project.video} />}
       </section>
+    ),
+    "time-into-memory": (
+      project.kind === "jiko" ? <JikoJourney /> : null
+    ),
+    gallery: (
+      project.kind === "jiko" ? (
+        <section id="gallery" className="case-section">
+          <span className="eyebrow">
+            {sectionNumber("gallery")} / THE INTERFACE
+          </span>
+          <h2>四张真实界面，各自承担一件事。</h2>
+          <p className="case-lead">
+            这是小程序里实际交付的四个界面：周回顾、计时与助手、主题设置，以及圆环与显示模式。
+            同一版式、同一套色温，放在一起能看出它始终是同一个产品。
+            点击任意一张可以放大查看，方向键切换。
+          </p>
+          <JikoGallery />
+        </section>
+      ) : null
+    ),
+    assistant: (
+      project.kind === "jiko" ? (
+        <section id="assistant" className="case-section">
+          <span className="eyebrow">
+            {sectionNumber("assistant")} / THE ASSISTANT
+          </span>
+          <h2>自然语言是入口，结构化草稿才是结果。</h2>
+          <p className="case-lead">
+            小迹助手接入 DeepSeek，把一句话里的活动与时间提取成字段，
+            形成一条可以确认的事项。这个界面上最关键的一步不是解析，
+            而是解析之后仍然停住，等用户确认。
+          </p>
+          <JikoAssistant />
+        </section>
+      ) : null
     ),
     reflection: (
       <section id="reflection" className="case-section">
@@ -551,83 +686,87 @@ export default async function ProjectPage({
   };
   return (
     <main id="main" className={editorial ? "case-edited" : undefined}>
-      <section className={`case-hero case-${project.kind} section-shell`}>
-        <div className="case-breadcrumb">
-          <Link href="/work">
-            <ArrowLeft size={15} /> ALL WORK
-          </Link>
-          <span>
-            PROJECT {project.index} / {String(projects.length).padStart(2, "0")}
-          </span>
-        </div>
-        <MaskReveal
-          as="h1"
-          className="case-display"
-          lineClassName="case-display-line"
-          lines={project.titleLines.length ? project.titleLines : [project.title]}
-          stagger={0.075}
+      {/* JIKO owns its first screen. The shared hero holds the title on the
+          left and leaves the right column empty, which put the product renders
+          a full screen below the title — so the name and the product were never
+          seen together. JIKO's hero is a two-column composition and the shared
+          cover below it is suppressed, because putting the same two renders in
+          both would just repeat them. Every other project is untouched. */}
+      {project.kind === "jiko" ? (
+        <JikoHero
+          index={project.index}
+          total={projects.length}
+          meta={[
+            { label: "YEAR", value: project.year },
+            { label: "CATEGORY", value: project.category },
+            { label: "ROLE / SCOPE", value: project.role },
+            { label: "PROJECT STATUS", value: project.status },
+          ]}
         />
-        <div className="case-hero-subtitle">
-          <p>{project.subtitle}</p>
-          <span>{project.chineseTitle}</span>
-        </div>
-        <dl className="case-meta">
-          <div>
-            <dt>YEAR</dt>
-            <dd>{project.year}</dd>
-          </div>
-          <div>
-            <dt>ROLE / SCOPE</dt>
-            <dd>{project.role}</dd>
-          </div>
-          <div>
-            <dt>PROJECT STATUS</dt>
-            <dd>{project.status}</dd>
-          </div>
-        </dl>
-        {editorial && (
-          <div className="case-brief" aria-label="项目速览">
-            <h2>{editorial.takeaway}</h2>
-            <dl>
+      ) : (
+        <>
+          <section className={`case-hero case-${project.kind} section-shell`}>
+            <div className="case-breadcrumb">
+              <Link href="/work">
+                <ArrowLeft size={15} /> ALL WORK
+              </Link>
+              <span>
+                PROJECT {project.index} /{" "}
+                {String(projects.length).padStart(2, "0")}
+              </span>
+            </div>
+            <MaskReveal
+              as="h1"
+              className="case-display"
+              lineClassName="case-display-line"
+              lines={
+                project.titleLines.length ? project.titleLines : [project.title]
+              }
+              stagger={0.075}
+            />
+            <div className="case-hero-subtitle">
+              <p>{project.subtitle}</p>
+              <span>{project.chineseTitle}</span>
+            </div>
+            <dl className="case-meta">
               <div>
-                <dt>我的工作</dt>
-                <dd>{editorial.contribution}</dd>
+                <dt>YEAR</dt>
+                <dd>{project.year}</dd>
               </div>
               <div>
-                <dt>已有成果</dt>
-                <dd>{editorial.evidence}</dd>
+                <dt>ROLE / SCOPE</dt>
+                <dd>{project.role}</dd>
+              </div>
+              <div>
+                <dt>PROJECT STATUS</dt>
+                <dd>{project.status}</dd>
               </div>
             </dl>
-            <div className="case-brief-bottom">
-              <p>{editorial.scope}</p>
-              <a href={`#${editorial.evidenceTarget}`} className="text-link">
-                {editorial.evidenceLabel} <ArrowUpRight size={18} />
-              </a>
-            </div>
+            {caseBrief}
+          </section>
+          <div
+            className={`case-cover case-${project.kind}${
+              bleedsCover ? " case-bleed" : ""
+            }${project.kind === "lattice" ? " cover-light" : ""}`}
+          >
+            <ProjectCover project={project} priority />
+            {/* The cover is the first screen, so the seam is the tonal cut from
+                the frame into the warm paper column rather than a strip bolted
+                underneath it. The scrim is what keeps the signature legible over
+                whatever the photograph does at the bottom; it carries no meaning
+                of its own, so it is hidden from assistive tech. */}
+            {(project.kind === "recovery" || bleedsCover) && (
+              <>
+                <span className="cover-scrim" aria-hidden="true" />
+                <p className="cover-signature">
+                  <span className="cover-signature-name">{project.title}</span>
+                  <span className="meta-key">Case Study / {project.index}</span>
+                </p>
+              </>
+            )}
           </div>
-        )}
-      </section>
-      <div
-        className={`case-cover case-${project.kind}${
-          bleedsCover ? " case-bleed" : ""
-        }${project.kind === "lattice" ? " cover-light" : ""}`}
-      >
-        <ProjectCover project={project} priority />
-        {/* The cover is the first screen, so the seam is the tonal cut from the
-            frame into the warm paper column rather than a strip bolted
-            underneath it. The scrim is what keeps the signature legible over
-            whatever the photograph does at the bottom; it carries no meaning of
-            its own, so it is hidden from assistive tech. */}
-        {(project.kind === "recovery" || bleedsCover) && (
-          <>
-            <span className="cover-scrim" aria-hidden="true" />
-            <p className="cover-signature">
-              <span className="cover-signature-name">{project.title}</span>
-              <span className="meta-key">Case Study / {project.index}</span>
-            </p>
-          </>
-        )}
-      </div>
+        </>
+      )}
 
       {/* Two seams left in the system: the architecture study hands off through
           a structural marker, every other case closes its full-bleed cover with

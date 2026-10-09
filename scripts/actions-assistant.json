@@ -1,0 +1,22 @@
+[
+  "assert:点击前字段数=document.querySelectorAll('.jiko-assistant-fields li').length",
+  "assert:点击前空状态=!!document.querySelector('.jiko-assistant-empty')",
+  "shot:a0-初始",
+  "click:.jiko-assistant-examples li:nth-of-type(2) button",
+  "wait:700",
+  "assert:点击后字段数=document.querySelectorAll('.jiko-assistant-fields li').length",
+  "assert:字段内容=Array.from(document.querySelectorAll('.jiko-assistant-fields li')).map(function(f){return f.textContent.replace(/\\s+/g,' ').trim()}).join(' | ')",
+  "assert:预览标题=(document.querySelector('.jiko-assistant-preview span')||{}).textContent",
+  "shot:a1-已选",
+  "click:.jiko-assistant-confirm",
+  "wait:700",
+  "assert:确认后按钮文案=(document.querySelector('.jiko-assistant-confirm')||{}).textContent",
+  "assert:确认后按钮禁用=(document.querySelector('.jiko-assistant-confirm')||{disabled:null}).disabled",
+  "assert:确认后预览类名=(document.querySelector('.jiko-assistant-preview')||{}).className",
+  "shot:a2-已确认",
+  "click:.jiko-assistant-examples li:nth-of-type(1) button",
+  "wait:600",
+  "assert:换一句后按钮禁用=(document.querySelector('.jiko-assistant-confirm')||{disabled:null}).disabled",
+  "assert:换一句后预览标题=(document.querySelector('.jiko-assistant-preview span')||{}).textContent",
+  "shot:a3-换句重置"
+]

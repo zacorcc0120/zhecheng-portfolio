@@ -23,31 +23,34 @@ export const caseEditorial: Partial<Record<ProjectKind, CaseEditorial>> = {
       "独立负责产品设计、界面交互、开发与发布准备；接入 DeepSeek 和 CloudBase 服务。",
     evidence:
       "已形成计时、时间轴、每日记录与周回顾流程，完成 AI 助手、提醒和云同步接入。",
-    evidenceTarget: "outcome",
-    evidenceLabel: "查看产品界面",
+    evidenceTarget: "time-into-memory",
+    evidenceLabel: "查看产品流程",
     scope:
-      "当前处于审核与内部测试阶段。下方计时器是网页交互演示，不保存记录；小程序的长期使用效果仍待验证。",
+      "当前处于审核与内部测试阶段。网页上的计时器与助手演示都是本地交互示意，不保存记录、不调用模型；小程序本身已可运行，但长期使用效果仍待验证。",
     problemTitle: "记录要轻，回顾要有用。",
-    decisionTitle: "围绕记录习惯组织产品。",
+    decisionTitle: "四个决定，贯穿整条时间轴。",
+    // Stated as decisions rather than features: each one is a choice that
+    // closed off alternatives, and a reader can disagree with the choice
+    // without needing to know what the screen looks like.
     decisions: [
       {
-        title: "用计时器承接当下",
-        body: "把圆环计时器放在首页中心，围绕活动类型、开始与暂停组织操作。记录入口服务于正在发生的事，减少开始记录前需要填写的信息。",
+        title: "01 / Reduce friction in recording.",
+        body: "把圆环计时器放在首页中心，围绕活动类型、开始与暂停组织操作。开始一次记录只需要两个动作，记录入口服务于正在发生的事，而不是服务于一份事后要填的表单。代价是记录的粒度由活动分类决定，无法在计时中写更细的描述。",
       },
       {
-        title: "用不同时间尺度组织回顾",
-        body: "时间轴保留事件顺序，每日记录与周回顾汇总活动分布。同一份记录既能回答“刚才做了什么”，也能帮助回看一段时间的安排。",
+        title: "02 / Turn records into a coherent timeline.",
+        body: "时间轴保留事件顺序，每日记录与周回顾负责汇总活动分布。同一份记录既要能回答「刚才做了什么」，也要能帮助回看一段时间的安排——这决定了数据模型必须同时保存起止时间与活动分类，而不只是时长。",
       },
       {
-        title: "让自然语言服务具体任务",
-        body: "小迹助手通过 DeepSeek 解析活动和时间信息，服务于记录与提醒。微信订阅消息与定时触发器承接到期通知，AI 能力围绕已有任务展开。",
+        title: "03 / Connect reflection and reminders.",
+        body: "小迹助手通过 DeepSeek 解析活动与时间信息，服务于记录与提醒；微信订阅消息与定时触发器承接到期通知。解析完成后仍然需要用户确认，AI 只提出结构化草稿，不直接写入提醒。",
       },
       {
-        title: "保留本地记录与数据出口",
-        body: "采用本地优先的数据方式，提供导入导出，再通过微信登录与 CloudBase 同步。界面上的记录体验与账户、同步和提醒服务分别承担清晰的职责。",
+        title: "04 / Keep personal expression available.",
+        body: "长期使用的记录工具需要适应个人审美与环境，因此提供主题色、圆环样式、壁纸强度与深浅色模式。这些设置只改变呈现，不改变记录本身——个性化不会让数据在不同主题之间变得不可比。",
       },
     ],
-    outcomeTitle: "从计时到回顾的产品界面。",
+    outcomeTitle: "RECORD. REVIEW. REMIND.",
     reflectionTitle: "记录频率、提醒到达率与周回顾仍待验证。",
   },
   recovery: {

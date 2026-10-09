@@ -1,0 +1,11 @@
+[
+  "clip:d0-初始=.jiko-demo",
+  "click:.jiko-primary-action",
+  "wait:1600",
+  "click:.jiko-primary-action",
+  "wait:400",
+  "click:.jiko-timer-actions button:nth-of-type(3)",
+  "wait:700",
+  "assert:结束后的计数=(document.querySelector('.jiko-insight-heading .eyebrow')||{}).textContent",
+  "clip:d2-已写入记录=.jiko-demo"
+]

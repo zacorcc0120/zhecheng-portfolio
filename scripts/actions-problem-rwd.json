@@ -1,0 +1,18 @@
+[
+  "wait:2500",
+  "assert:geom=JSON.stringify((()=>{const r=e=>{const b=e.getBoundingClientRect();return {t:Math.round(b.top+scrollY),w:Math.round(b.width),h:Math.round(b.height)}};const body=document.querySelector('.jiko-problems-body');const stage=document.querySelector('.jiko-problems-stage');const plate=document.querySelector('.jiko-problems-visual');return {viewport:innerWidth+'x'+innerHeight,overflowX:document.documentElement.scrollWidth-document.documentElement.clientWidth,body:r(body),stage:r(stage),plate:r(plate),stagePos:getComputedStyle(stage).position,panels:[...document.querySelectorAll('.jiko-problem')].map(r),bodyDisplay:getComputedStyle(body).display,stackDisplay:getComputedStyle(document.querySelector('.jiko-problems-stack')).display,tocW:Math.round(document.querySelector('.case-index, .case-toc').getBoundingClientRect().width)};})())",
+  "assert:go1=(window.scrollTo(0,document.querySelectorAll('.jiko-problem')[0].getBoundingClientRect().top+scrollY+240-innerHeight/2),'panel1')",
+  "wait:900",
+  "assert:s1=JSON.stringify({active:[...document.querySelectorAll('.jiko-problem')].findIndex(p=>p.classList.contains('is-active')),layers:[...document.querySelectorAll('.jiko-problems-body .jiko-pv-layer')].map(g=>getComputedStyle(g).opacity),stageTop:Math.round(document.querySelector('.jiko-problems-stage').getBoundingClientRect().top),stageBottom:Math.round(document.querySelector('.jiko-problems-stage').getBoundingClientRect().bottom)})",
+  "shot:rwd-p1",
+  "assert:go2=(window.scrollTo(0,document.querySelectorAll('.jiko-problem')[1].getBoundingClientRect().top+scrollY+240-innerHeight/2),'panel2')",
+  "wait:900",
+  "assert:s2=JSON.stringify({active:[...document.querySelectorAll('.jiko-problem')].findIndex(p=>p.classList.contains('is-active')),layers:[...document.querySelectorAll('.jiko-problems-body .jiko-pv-layer')].map(g=>getComputedStyle(g).opacity)})",
+  "shot:rwd-p2",
+  "assert:go3=(window.scrollTo(0,document.querySelectorAll('.jiko-problem')[2].getBoundingClientRect().top+scrollY+240-innerHeight/2),'panel3')",
+  "wait:900",
+  "assert:s3=JSON.stringify({active:[...document.querySelectorAll('.jiko-problem')].findIndex(p=>p.classList.contains('is-active')),layers:[...document.querySelectorAll('.jiko-problems-body .jiko-pv-layer')].map(g=>getComputedStyle(g).opacity),stageTop:Math.round(document.querySelector('.jiko-problems-stage').getBoundingClientRect().top),stageBottom:Math.round(document.querySelector('.jiko-problems-stage').getBoundingClientRect().bottom)})",
+  "shot:rwd-p3",
+  "assert:sectionTail=(window.scrollTo(0,document.documentElement.scrollHeight),'bottom')",
+  "wait:600"
+]

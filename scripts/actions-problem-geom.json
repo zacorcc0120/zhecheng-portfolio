@@ -1,0 +1,7 @@
+[
+  "wait:2500",
+  "assert:hydratedNodes=JSON.stringify([...document.querySelectorAll('*')].filter(e=>Object.keys(e).some(k=>k.indexOf('__reactFiber')===0)).length)",
+  "assert:geometry=JSON.stringify((()=>{const q=s=>document.querySelector(s);const r=e=>{const b=e.getBoundingClientRect();return {t:Math.round(b.top+scrollY),l:Math.round(b.left),w:Math.round(b.width),h:Math.round(b.height)}};const body=q('.jiko-problems-body');const stage=q('.jiko-problems-stage');const plate=q('.jiko-problems-visual');const rail=q('.jiko-problems-rail');const panels=[...document.querySelectorAll('.jiko-problem')];return {docH:document.documentElement.scrollHeight,overflowX:document.documentElement.scrollWidth-document.documentElement.clientWidth,body:r(body),stage:r(stage),plate:r(plate),rail:r(rail),panels:panels.map(r),stackDisplay:getComputedStyle(q('.jiko-problems-stack')).display,bodyDisplay:getComputedStyle(body).display};})())",
+  "assert:stageSticky=getComputedStyle(document.querySelector('.jiko-problems-stage')).position",
+  "assert:layers=JSON.stringify([...document.querySelectorAll('.jiko-pv-layer')].map(g=>getComputedStyle(g).opacity))"
+]

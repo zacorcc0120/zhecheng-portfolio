@@ -1,0 +1,17 @@
+[
+  "assert:折叠项数=document.querySelectorAll('.collapsible').length",
+  "assert:初始展开数=document.querySelectorAll('.collapsible.is-open').length",
+  "assert:初始aria=Array.from(document.querySelectorAll('.collapsible-trigger')).map(function(b){return b.getAttribute('aria-expanded')}).join(',')",
+  "assert:初始各段高度=Array.from(document.querySelectorAll('.collapsible')).map(function(c){var b=c.querySelector('.collapsible-body'); return b?Math.round(b.getBoundingClientRect().height):'收起'}).join(',')",
+  "click:.collapsible:nth-of-type(3) .collapsible-trigger",
+  "wait:700",
+  "assert:点击后展开数=document.querySelectorAll('.collapsible.is-open').length",
+  "assert:点击后aria=Array.from(document.querySelectorAll('.collapsible-trigger')).map(function(b){return b.getAttribute('aria-expanded')}).join(',')",
+  "assert:点击后各段高度=Array.from(document.querySelectorAll('.collapsible')).map(function(c){var b=c.querySelector('.collapsible-body'); return b?Math.round(b.getBoundingClientRect().height):'收起'}).join(',')",
+  "assert:aria-controls对应=document.querySelectorAll('.collapsible-trigger')[2].getAttribute('aria-controls')===document.querySelectorAll('.collapsible')[2].querySelector('.collapsible-body').id",
+  "shot:c1-第3项展开",
+  "click:.collapsible:nth-of-type(3) .collapsible-trigger",
+  "wait:700",
+  "assert:再点后展开数=document.querySelectorAll('.collapsible.is-open').length",
+  "assert:再点后各段高度=Array.from(document.querySelectorAll('.collapsible')).map(function(c){var b=c.querySelector('.collapsible-body'); return b?Math.round(b.getBoundingClientRect().height):'收起'}).join(',')"
+]

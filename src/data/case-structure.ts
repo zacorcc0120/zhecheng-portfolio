@@ -13,18 +13,30 @@ export type CaseSectionId =
   | "application"
   | "interactive"
   | "outcome"
-  | "reflection";
+  | "reflection"
+  // JIKO-only chapters. They sit in the same record as the shared ones so the
+  // page can keep one progress rail, and every project that does not use them
+  // leaves them out of its structure entirely.
+  | "time-into-memory"
+  | "gallery"
+  | "assistant";
 type Chapter = { id: CaseSectionId; title: string };
 
 // Reading order follows the work: product tasks, building rules, or experiments.
 export const caseStructures: Record<ProjectKind, Chapter[]> = {
+  // Eight chapters, ordered as the product itself is used rather than as the
+  // feature list reads. The signature sequence sits between the problem and
+  // the hands-on demo on purpose: the reader first sees what the product
+  // believes, then what it does, then gets to do it.
   jiko: [
     { id: "overview", title: "产品与职责" },
     { id: "problem", title: "记录中的困难" },
+    { id: "time-into-memory", title: "时间成为记忆" },
     { id: "interactive", title: "开始一次计时" },
-    { id: "outcome", title: "回顾、提醒与设置" },
-    { id: "research", title: "交互与数据设计" },
-    { id: "reflection", title: "待验证的使用体验" },
+    { id: "gallery", title: "产品界面" },
+    { id: "assistant", title: "自然语言入口" },
+    { id: "research", title: "设计决策" },
+    { id: "outcome", title: "成果与阶段" },
   ],
   // Five chapters, not six. The problem statement used to be its own chapter
   // and it is one sentence long, which made it look as important as the

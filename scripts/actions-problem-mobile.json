@@ -1,0 +1,15 @@
+[
+  "wait:2500",
+  "assert:geom=JSON.stringify((()=>{const r=e=>{const b=e.getBoundingClientRect();return {t:Math.round(b.top+scrollY),w:Math.round(b.width),h:Math.round(b.height)}};return {viewport:innerWidth+'x'+innerHeight,overflowX:document.documentElement.scrollWidth-document.documentElement.clientWidth,bodyDisplay:getComputedStyle(document.querySelector('.jiko-problems-body')).display,stackDisplay:getComputedStyle(document.querySelector('.jiko-problems-stack')).display,items:[...document.querySelectorAll('.jiko-problems-stack-item')].map(r),plates:[...document.querySelectorAll('.jiko-problems-visual.is-inline')].map(r),stagePos:getComputedStyle(document.querySelector('.jiko-problems-stage')).position};})())",
+  "assert:go1=(window.scrollTo(0,document.querySelectorAll('.jiko-problems-stack-item')[0].getBoundingClientRect().top+scrollY-20),'item1')",
+  "wait:800",
+  "shot:m-p1",
+  "assert:go2=(window.scrollTo(0,document.querySelectorAll('.jiko-problems-stack-item')[1].getBoundingClientRect().top+scrollY-20),'item2')",
+  "wait:800",
+  "shot:m-p2",
+  "assert:go3=(window.scrollTo(0,document.querySelectorAll('.jiko-problems-stack-item')[2].getBoundingClientRect().top+scrollY-20),'item3')",
+  "wait:800",
+  "shot:m-p3",
+  "assert:layerOpacity=JSON.stringify([...document.querySelectorAll('.jiko-problems-stack .jiko-pv-layer')].map(g=>getComputedStyle(g).opacity))",
+  "assert:svgLabels=JSON.stringify([...document.querySelectorAll('.jiko-problems-stack .jiko-problems-canvas')].map(s=>s.getAttribute('aria-label').slice(0,14)))"
+]

@@ -1,0 +1,16 @@
+[
+  "wait:2500",
+  "assert:transitionKilled=JSON.stringify([...document.querySelectorAll('.jiko-problems-stack .jiko-pv-layer')].map(g=>getComputedStyle(g).transitionDuration))",
+  "assert:bodyHidden=getComputedStyle(document.querySelector('.jiko-problems-body')).display",
+  "assert:stackShown=getComputedStyle(document.querySelector('.jiko-problems-stack')).display",
+  "assert:geom=JSON.stringify((()=>{const r=e=>{const b=e.getBoundingClientRect();return {t:Math.round(b.top+scrollY),l:Math.round(b.left),w:Math.round(b.width),h:Math.round(b.height)}};return {overflowX:document.documentElement.scrollWidth-document.documentElement.clientWidth,items:[...document.querySelectorAll('.jiko-problems-stack-item')].map(r),plates:[...document.querySelectorAll('.jiko-problems-visual.is-inline')].map(r),heads:[...document.querySelectorAll('.jiko-problems-stack-head')].map(r),bodies:[...document.querySelectorAll('.jiko-problems-stack-body')].map(r)};})())",
+  "assert:go1=(window.scrollTo(0,document.querySelectorAll('.jiko-problems-stack-item')[0].getBoundingClientRect().top+scrollY-20),'item1')",
+  "wait:800",
+  "shot:reduce-p1",
+  "assert:go2=(window.scrollTo(0,document.querySelectorAll('.jiko-problems-stack-item')[1].getBoundingClientRect().top+scrollY-20),'item2')",
+  "wait:800",
+  "shot:reduce-p2",
+  "assert:go3=(window.scrollTo(0,document.querySelectorAll('.jiko-problems-stack-item')[2].getBoundingClientRect().top+scrollY-20),'item3')",
+  "wait:800",
+  "shot:reduce-p3"
+]

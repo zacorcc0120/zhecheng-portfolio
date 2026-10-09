@@ -1,0 +1,18 @@
+[
+  "assert:缩略图数=document.querySelectorAll('.jiko-plate-thumb').length",
+  "assert:已移除的版式残留=document.querySelectorAll('.jiko-plate-feature, .jiko-plate-pair, .jiko-plate-detail').length",
+  "assert:裁切图是否还被请求=Array.from(document.images).some(function(i){return i.src.indexOf('appearance-rings-detail')>-1})",
+  "click:.jiko-plate-thumb:nth-of-type(3)",
+  "wait:700",
+  "assert:灯箱已打开=!!document.querySelector('.jiko-lightbox')",
+  "assert:灯箱标题=document.querySelector('.jiko-lightbox').getAttribute('aria-label')",
+  "assert:body已锁滚=getComputedStyle(document.body).overflow",
+  "shot:g-灯箱-从第三张打开",
+  "key:ArrowRight",
+  "wait:600",
+  "assert:右移后标题=document.querySelector('.jiko-lightbox').getAttribute('aria-label')",
+  "key:Escape",
+  "wait:600",
+  "assert:关闭后灯箱=!document.querySelector('.jiko-lightbox')",
+  "assert:关闭后焦点=(document.activeElement.className||'')+' '+(document.activeElement.getAttribute('aria-label')||'')"
+]

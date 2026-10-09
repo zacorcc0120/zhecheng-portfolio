@@ -1,0 +1,10 @@
+[
+  "assert:降低动效偏好=window.matchMedia('(prefers-reduced-motion: reduce)').matches",
+  "assert:宽屏body显示=getComputedStyle(document.querySelector('.jiko-journey-body')).display",
+  "assert:堆叠显示=getComputedStyle(document.querySelector('.jiko-journey-stack')).display",
+  "assert:堆叠项数=document.querySelectorAll('.jiko-journey-stack-item').length",
+  "assert:REVIEW高亮x=getComputedStyle(document.querySelectorAll('.jiko-screen-canvas')[3].querySelector('rect[width=\"30\"][height=\"64\"]')).transform",
+  "assert:每屏只有一层可见=Array.from(document.querySelectorAll('.jiko-screen-canvas')).slice(1).map(function(c){return Array.from(c.children).map(function(g){return Number(getComputedStyle(g).opacity).toFixed(2)}).join('/')}).join(' | ')",
+  "assert:动画时长=Array.from(document.querySelectorAll('.jiko-journey-stack-item *')).slice(0,40).map(function(e){return getComputedStyle(e).transitionDuration}).filter(function(v,i,a){return a.indexOf(v)===i}).join(',')",
+  "shot:r-降低动效-栈"
+]

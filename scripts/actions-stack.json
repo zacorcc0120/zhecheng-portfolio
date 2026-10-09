@@ -1,0 +1,3 @@
+[
+  "assert:候选=Array.from(document.querySelectorAll('.jiko-screen-canvas')[4].querySelectorAll('*')).map(function(el){var b;try{b=el.getBBox()}catch(e){return ''} return el.tagName+':'+(el.textContent||'').slice(0,10)+' @'+Math.round(b.x)+','+Math.round(b.y)+' '+Math.round(b.width)+'x'+Math.round(b.height)+' op='+(el.style.opacity||'-')}).filter(function(s){var m=s.match(/@(\\d+),(\\d+)/); return m && +m[2]>460 && +m[2]<515}).join('  ||  ')"
+]

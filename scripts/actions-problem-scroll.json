@@ -1,0 +1,46 @@
+[
+  "wait:2500",
+  "assert:setup=JSON.stringify({hydrated:[...document.querySelectorAll('*')].filter(e=>Object.keys(e).some(k=>k.indexOf('__reactFiber')===0)).length})",
+
+  "scroll:1960",
+  "wait:800",
+  "assert:at1960=JSON.stringify({active:[...document.querySelectorAll('.jiko-problem')].findIndex(p=>p.classList.contains('is-active')),layers:[...document.querySelectorAll('.jiko-problems-body .jiko-pv-layer')].map(g=>getComputedStyle(g).opacity),rail:[...document.querySelectorAll('.jiko-problems-rail button')].map(b=>b.getAttribute('aria-current')||'-'),stageTop:Math.round(document.querySelector('.jiko-problems-stage').getBoundingClientRect().top)})",
+  "shot:p1-entry",
+
+  "scroll:2016",
+  "wait:800",
+  "assert:at2016_panel1=JSON.stringify({active:[...document.querySelectorAll('.jiko-problem')].findIndex(p=>p.classList.contains('is-active')),layers:[...document.querySelectorAll('.jiko-problems-body .jiko-pv-layer')].map(g=>getComputedStyle(g).opacity)})",
+  "shot:p1",
+  "clip:p1-body=.jiko-problems-body",
+
+  "scroll:2496",
+  "wait:800",
+  "assert:at2496_panel2=JSON.stringify({active:[...document.querySelectorAll('.jiko-problem')].findIndex(p=>p.classList.contains('is-active')),layers:[...document.querySelectorAll('.jiko-problems-body .jiko-pv-layer')].map(g=>getComputedStyle(g).opacity),rail:[...document.querySelectorAll('.jiko-problems-rail button')].map(b=>b.getAttribute('aria-current')||'-')})",
+  "shot:p2",
+  "clip:p2-plate=.jiko-problems-stage",
+
+  "scroll:2976",
+  "wait:800",
+  "assert:at2976_panel3=JSON.stringify({active:[...document.querySelectorAll('.jiko-problem')].findIndex(p=>p.classList.contains('is-active')),layers:[...document.querySelectorAll('.jiko-problems-body .jiko-pv-layer')].map(g=>getComputedStyle(g).opacity),rail:[...document.querySelectorAll('.jiko-problems-rail button')].map(b=>b.getAttribute('aria-current')||'-')})",
+  "shot:p3",
+
+  "scroll:2256",
+  "wait:900",
+  "assert:up_2256_backTo1=JSON.stringify({active:[...document.querySelectorAll('.jiko-problem')].findIndex(p=>p.classList.contains('is-active')),layers:[...document.querySelectorAll('.jiko-problems-body .jiko-pv-layer')].map(g=>getComputedStyle(g).opacity)})",
+
+  "scroll:2736",
+  "wait:900",
+  "assert:up_2736_backTo2=JSON.stringify({active:[...document.querySelectorAll('.jiko-problem')].findIndex(p=>p.classList.contains('is-active')),layers:[...document.querySelectorAll('.jiko-problems-body .jiko-pv-layer')].map(g=>getComputedStyle(g).opacity)})",
+
+  "click:.jiko-problems-rail button:nth-child(1)",
+  "wait:1200",
+  "assert:clickRail1=JSON.stringify({active:[...document.querySelectorAll('.jiko-problem')].findIndex(p=>p.classList.contains('is-active')),scrollY:Math.round(scrollY)})",
+
+  "click:.jiko-problems-rail button:nth-child(3)",
+  "wait:1200",
+  "assert:clickRail3=JSON.stringify({active:[...document.querySelectorAll('.jiko-problem')].findIndex(p=>p.classList.contains('is-active')),scrollY:Math.round(scrollY)})",
+
+  "scroll:3300",
+  "wait:800",
+  "assert:belowSection_plateStillVisible=JSON.stringify({active:[...document.querySelectorAll('.jiko-problem')].findIndex(p=>p.classList.contains('is-active')),stageTop:Math.round(document.querySelector('.jiko-problems-stage').getBoundingClientRect().top),plateBottom:Math.round(document.querySelector('.jiko-problems-visual').getBoundingClientRect().bottom)})"
+]

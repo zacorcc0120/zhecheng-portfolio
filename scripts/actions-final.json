@@ -1,0 +1,9 @@
+[
+  "assert:横向溢出=document.documentElement.scrollWidth - document.documentElement.clientWidth",
+  "assert:图集剩余元素=document.querySelectorAll('.jiko-plate').length",
+  "assert:四张图都已加载=Array.from(document.querySelectorAll('.jiko-plate-thumb img')).map(function(i){return i.complete && i.naturalWidth>0}).join(',')",
+  "assert:章节数=document.querySelectorAll('.case-index a, .case-toc a').length",
+  "assert:含逝刻=document.body.innerHTML.indexOf('逝刻')>-1",
+  "assert:含迹刻=document.body.innerHTML.indexOf('迹刻')>-1",
+  "assert:横向溢出2=(document.documentElement.scrollWidth - document.documentElement.clientWidth)"
+]
