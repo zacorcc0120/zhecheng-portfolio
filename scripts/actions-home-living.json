@@ -1,0 +1,13 @@
+[
+  "wait:2500",
+  "assert:goMethod=(window.scrollTo(0,document.querySelector('.method-stage').getBoundingClientRect().top+scrollY-120),'ok')",
+  "wait:1200",
+  "assert:lpBbox=JSON.stringify((()=>{const s=document.querySelector('.living-process-canvas');const b=s.getBBox();const vb=s.viewBox.baseVal;return {b:{x:Math.round(b.x),y:Math.round(b.y),w:Math.round(b.width),h:Math.round(b.height)},vb:{w:vb.width,h:vb.height},inside:b.x>=0&&b.y>=0&&b.x+b.width<=vb.width&&b.y+b.height<=vb.height};})())",
+  "clip:lp-a=.living-process",
+  "wait:1500",
+  "clip:lp-b=.living-process",
+  "wait:1500",
+  "clip:lp-c=.living-process",
+  "wait:1500",
+  "clip:lp-d=.living-process"
+]

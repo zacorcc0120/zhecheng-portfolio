@@ -5,6 +5,7 @@ import { Contact } from "@/components/layout/Footer";
 import { HeroField } from "@/components/home/HeroField";
 import { HeroHeadline } from "@/components/home/HeroHeadline";
 import { MethodIndex } from "@/components/home/MethodIndex";
+import { FormField } from "@/components/home/FormField";
 import { RuleIndexDivider } from "@/components/home/RuleIndexDivider";
 import { ChapterMarkDivider } from "@/components/home/ChapterMarkDivider";
 import { WorksIndex } from "@/components/home/WorksIndex";
@@ -70,19 +71,26 @@ export default function Home() {
       {/* Five projects, one method. Nothing else. */}
       <ChapterMarkDivider />
 
-      {/* Quiet. The page is allowed to be almost empty here. */}
+      {/* Quiet, and no longer only type. The headline keeps the whole width it
+          had — it is the last thing the page says before it introduces the
+          person — and the generative field sits underneath it in the space the
+          section was already giving away. */}
       <section className="quiet section-shell">
-        <p className="quiet-line">
-          <MaskBlock duration={1.2}>
-            RULES INTO
-          </MaskBlock>
-          <MaskBlock delay={0.12} duration={1.2}>
-            POSSIBILITIES.
-          </MaskBlock>
-        </p>
-        <span className="quiet-note meta-key">
-          方法先于形式 / METHOD BEFORE FORM
-        </span>
+        <div className="quiet-head">
+          <p className="quiet-line">
+            <MaskBlock duration={1.2}>
+              RULES INTO
+            </MaskBlock>
+            <MaskBlock delay={0.12} duration={1.2}>
+              POSSIBILITIES.
+            </MaskBlock>
+          </p>
+          <span className="quiet-note meta-key">
+            方法先于形式 / METHOD BEFORE FORM
+          </span>
+        </div>
+
+        <FormField />
       </section>
 
       <section className="home-about section-shell">

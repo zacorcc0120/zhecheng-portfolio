@@ -1,0 +1,11 @@
+[
+  "wait:2500",
+  "assert:fit=JSON.stringify((()=>{const r=e=>{const b=e.getBoundingClientRect();return {t:Math.round(b.top+scrollY),w:Math.round(b.width),h:Math.round(b.height)}};const g=(s)=>{const e=document.querySelector(s);return e?r(e):null};return {vw:innerWidth,docH:document.documentElement.scrollHeight,overflowX:document.documentElement.scrollWidth-document.documentElement.clientWidth,method:g('.method'),stage:g('.method-stage'),body:g('.method-body'),living:g('.living-process'),livingCanvas:g('.living-process-canvas'),quiet:g('.quiet'),quietHead:g('.quiet-head'),field:g('.form-field'),canvas:g('.form-field-canvas'),about:g('.home-about'),contact:g('.contact-section')};})())",
+  "assert:goField=(window.scrollTo(0,document.querySelector('.form-field').getBoundingClientRect().top+scrollY-100),'ok')",
+  "wait:1400",
+  "shot:rp-field",
+  "clip:rp-canvas=.form-field-canvas",
+  "assert:goMethod=(window.scrollTo(0,document.querySelector('.method-stage').getBoundingClientRect().top+scrollY-100),'ok')",
+  "wait:1200",
+  "shot:rp-method"
+]

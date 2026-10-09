@@ -5145,12 +5145,10 @@ th {
   color: #5f5f59;
   font-size: 14px;
 }
-.method-grid {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--grid-gap);
-  margin-top: clamp(48px, 8vh, 110px);
-}
+/* The method's two registers — the rule chains and the tool register — used to
+   share one twelve-column row with the disciplines. They now stack in a single
+   left column so the right half of the section can hold the running diagram;
+   the column spans they inherited are reset by .method-body. */
 .method-disc {
   grid-column: 1 / 8;
   list-style: none;
@@ -6008,7 +6006,7 @@ th {
 
   .manifesto-body,
   .method-head,
-  .method-grid,
+  .method-stage,
   .works-head-main,
   .home-about-grid,
   .chapter-text {
@@ -11102,6 +11100,509 @@ th {
 }
 
 /* ==========================================================================
+   HOMEPAGE — LIVING SYSTEMS
+
+   Two drawings, one motion language. REGION A (METHOD) is an instrument panel
+   beside its argument; REGION B (RULES INTO POSSIBILITIES) is the second
+   signature motion and the only place on the page where geometry is allowed to
+   take the full width.
+
+   Both are SVG rather than canvas or WebGL. The content is hairline geometry
+   — rules, nodes, a lattice — and hairline geometry is exactly what SVG draws
+   without a shader, a framebuffer or a dependency. Nothing here is 3D, so
+   nothing here needs a 3D runtime.
+   ========================================================================== */
+
+:root {
+  --lf-ink: #111111;
+  --lf-mute: #777773;
+  --lf-rule: #9e9e94;
+  --lf-hair: #b2b2a9;
+  --lf-paper: #f2f2ef;
+  --lf-panel: #fafaf7;
+}
+
+/* --- REGION A — METHOD becomes a spread ------------------------------- */
+
+.method-stage {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gap);
+  margin-top: clamp(40px, 6vh, 84px);
+}
+
+.method-body {
+  grid-column: 1 / 8;
+  display: grid;
+  align-content: start;
+  gap: clamp(28px, 4.5vh, 52px);
+}
+
+/* The list and the tools used to be two columns of the same grid; stacked in
+   one column they are one register — the method, written out — and the right
+   half of the section is given to the drawing. */
+.method-body > .method-disc,
+.method-body > .method-tools {
+  grid-column: auto;
+}
+
+/* Hovering a domain is the section's only interaction. The row answers with
+   contrast and a short rule, never with a jump. */
+.method-disc li {
+  transition: opacity 220ms var(--ease-inout, ease), color 220ms var(--ease-inout, ease);
+}
+
+.method-disc li.is-dim {
+  opacity: 0.4;
+}
+
+.method-disc li.is-focus .method-disc-name {
+  color: var(--lf-ink);
+}
+
+.method-disc li.is-focus .method-disc-index {
+  color: var(--lf-ink);
+}
+
+/* The tool register is a flat list, not a sequence, so it runs across the full
+   width under both columns. Stacked into the left one it made the left column
+   300px taller than the drawing beside it. */
+.method-stage > .method-tools {
+  grid-column: 1 / -1;
+  margin: clamp(26px, 4vh, 48px) 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
+.method-stage > .method-tools > div {
+  padding: 14px 0 0;
+  border-top: var(--rule);
+}
+
+/* --- LIVING PROCESS ---------------------------------------------------- */
+
+.living-process {
+  grid-column: 9 / 13;
+  margin: 0;
+  align-self: start;
+  position: relative;
+  border: 1px solid var(--lf-hair);
+  background: var(--lf-panel);
+  padding: 12px 14px 10px;
+}
+
+.living-process-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--lf-hair);
+  color: var(--lf-mute);
+  font-size: 10px;
+}
+
+.living-process-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* A drawing this size never needs a pointer cursor; the hover targets that
+     matter are the four rows in the list beside it. */
+  pointer-events: none;
+}
+
+.lp-label,
+.lp-input,
+.lp-foot,
+.lp-out-label,
+.lp-block-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tracking-meta, 0.08em);
+  fill: var(--lf-mute);
+}
+
+.lp-input {
+  font-size: 10.5px;
+  fill: var(--lf-ink);
+}
+
+.lp-out-label {
+  font-size: 9px;
+  fill: var(--lf-mute);
+}
+
+.lp-foot {
+  font-size: 9px;
+}
+
+.lp-foot-r {
+  fill: #a5a59d;
+}
+
+.lp-block-label {
+  font-size: 8.5px;
+  fill: var(--lf-ink);
+}
+
+.lp-lead {
+  stroke: var(--lf-rule);
+  stroke-linecap: round;
+}
+
+.lp-node {
+  fill: var(--lf-ink);
+}
+
+.lp-link {
+  fill: none;
+  stroke: var(--lf-rule);
+  stroke-width: 0.8;
+}
+
+.lp-link-out {
+  stroke-dasharray: 2 3;
+}
+
+.lp-spine {
+  stroke: var(--lf-rule);
+  stroke-width: 0.8;
+}
+
+.lp-block {
+  fill: none;
+  stroke: var(--lf-ink);
+  stroke-width: 1;
+}
+
+.lp-scan {
+  fill: var(--lf-accent, #cbd2a7);
+}
+
+.lp-thin {
+  fill: none;
+  stroke: var(--lf-rule);
+  stroke-width: 0.7;
+}
+
+.lp-diag {
+  stroke: #9d9d94;
+}
+
+.lp-tick {
+  stroke: var(--lf-rule);
+  stroke-width: 0.8;
+}
+
+.lp-hollow {
+  fill: none;
+  stroke: var(--lf-ink);
+  stroke-width: 0.9;
+}
+
+.lp-box {
+  fill: none;
+  stroke: var(--lf-rule);
+  stroke-width: 0.8;
+}
+
+.lp-box-alt {
+  stroke: var(--lf-ink);
+}
+
+.lp-rail {
+  stroke: #9d9d94;
+}
+
+.lp-dash-box {
+  fill: none;
+  stroke: var(--lf-hair);
+  stroke-width: 0.7;
+  stroke-dasharray: 3 4;
+}
+
+.lp-arc {
+  fill: none;
+  stroke: var(--lf-rule);
+  stroke-width: 0.7;
+}
+
+.lp-solid {
+  fill: var(--lf-ink);
+}
+
+/* --- REGION B — RULES INTO POSSIBILITIES ------------------------------ */
+
+.quiet {
+  padding-top: var(--space-chapter);
+  padding-bottom: var(--space-chapter);
+  display: grid;
+  /* The old rule centred this section's single flex line. Left in place it also
+     centres a grid column, which sized the plate to its own content and left
+     300px of unused grid on the right — the plate has to take the full field. */
+  grid-template-columns: minmax(0, 1fr);
+  justify-content: stretch;
+  gap: clamp(30px, 4.5vh, 56px);
+}
+
+/* The headline keeps every pixel it had. It is the last statement the page
+   makes before it introduces the person, and the drawing is not allowed to
+   push it around. */
+.quiet-head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gap);
+  align-items: end;
+}
+
+.quiet-head .quiet-line {
+  grid-column: 1 / 9;
+}
+
+.quiet-head .quiet-note {
+  grid-column: 9 / 13;
+  margin-top: 0;
+  padding-bottom: 0.6em;
+}
+
+/* --- GENERATIVE FORM FIELD -------------------------------------------- */
+
+.form-field {
+  --q: 0;
+  position: relative;
+  margin: 0;
+  border: 1px solid var(--lf-hair);
+  background: var(--lf-panel);
+  padding: 12px 14px 12px;
+  /* The plate carries its own exit, so nothing here may overflow horizontally
+     at any width. */
+  min-width: 0;
+}
+
+.form-field-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--lf-hair);
+  color: var(--lf-mute);
+  font-size: 10px;
+}
+
+.form-field-phase {
+  color: var(--lf-ink);
+  font-size: 10px;
+}
+
+.form-field-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Stroke widths are in viewBox units, so the same number that reads as a crisp
+   hairline at 1.3× rasterises to a third of a pixel on a phone and greys the
+   whole drawing out. --ff-widen is the reciprocal of the plate's rendered scale,
+   written by the component; the widths below are the values at 1:1. */
+.ff-frame {
+  fill: none;
+  stroke: var(--lf-hair);
+  stroke-width: calc(0.8px * var(--ff-widen, 1));
+}
+
+.ff-axis {
+  stroke: var(--lf-hair);
+  stroke-width: calc(0.7px * var(--ff-widen, 1));
+  stroke-dasharray: 4 5;
+}
+
+.ff-row {
+  fill: none;
+  stroke: var(--lf-rule);
+  stroke-width: calc(0.9px * var(--ff-widen, 1));
+}
+
+.ff-rule {
+  fill: none;
+  stroke: var(--lf-hair);
+  stroke-width: calc(0.75px * var(--ff-widen, 1));
+}
+
+.ff-topo {
+  fill: none;
+  stroke: var(--lf-ink);
+  stroke-width: calc(0.55px * var(--ff-widen, 1));
+}
+
+.ff-mass {
+  fill: var(--lf-rule);
+  stroke: none;
+}
+
+.ff-node {
+  fill: var(--lf-ink);
+}
+
+.ff-micro {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: var(--tracking-meta, 0.08em);
+  fill: #a5a59d;
+}
+
+.ff-control {
+  fill: none;
+  stroke: var(--lf-mute);
+  stroke-width: calc(0.8px * var(--ff-widen, 1));
+}
+
+.form-field-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--lf-hair);
+}
+
+.form-field-caption {
+  margin: 0;
+  max-width: 42ch;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #3d3d38;
+}
+
+.form-field-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.form-field-mode {
+  min-width: 96px;
+  color: var(--lf-mute);
+  font-size: 10px;
+}
+
+.form-field-btn {
+  padding: 8px 12px;
+  border: 1px solid var(--lf-hair);
+  background: none;
+  color: var(--lf-mute);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--tracking-meta, 0.08em);
+  cursor: pointer;
+  transition:
+    color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-field-btn:hover {
+  color: var(--lf-ink);
+  border-color: var(--lf-ink);
+}
+
+.form-field-btn:focus-visible {
+  outline: 1px solid var(--lf-ink);
+  outline-offset: 3px;
+}
+
+.form-field-btn[aria-pressed="true"] {
+  color: var(--lf-ink);
+  border-color: var(--lf-ink);
+  background: rgba(17, 17, 17, 0.04);
+}
+
+/* --- ABOUT — rules that draw, rows that answer ------------------------ */
+
+.home-about-facts li {
+  position: relative;
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.home-about-facts li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 100%;
+  height: 1px;
+  background: var(--lf-ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.home-about-facts li:hover::before {
+  transform: scaleX(1);
+}
+
+.home-about-facts li:hover > span:first-child {
+  color: var(--lf-ink);
+}
+
+.home-about-facts li > span:first-child {
+  transition: color 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- CONTACT — the quiet ending ---------------------------------------- */
+
+.contact-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* One hairline in the empty band between the headline and the entries, drawn
+   from the left when a contact channel is engaged — a connector to the entry
+   row rather than another panel of equally loud buttons. It is anchored to the
+   bottom of the section, not to a percentage of its height: the headline wraps
+   differently at every breakpoint, and a rule that lands on the type at one
+   width is worse than no rule at all. */
+.contact-section::after {
+  content: "";
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: var(--contact-rule-y, 74px);
+  height: 1px;
+  background: rgba(242, 242, 239, 0.18);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.contact-section:has(.contact-links a:hover)::after,
+.contact-section:has(.contact-links a:focus-visible)::after {
+  transform: scaleX(1);
+}
+
+.contact-links a {
+  transition: color 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-links a:hover {
+  color: var(--paper);
+}
+
+.contact-links a:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.contact-links a svg {
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
    Reduced motion
 
    Reduced motion is not a downgrade. The signature sequence gives up the
@@ -11154,5 +11655,103 @@ th {
   .collapsible-marker::before,
   .collapsible-marker::after {
     transition-duration: 0.01ms !important;
+  }
+
+  /* The two drawings stop moving by JavaScript, not by CSS — the clock is never
+     started under reduced motion, and one settled frame is drawn instead. What
+     is left to silence here is the hover and focus feedback on the surrounding
+     controls, which is state, not movement. */
+  .method-disc li,
+  .method-disc li > span,
+  .home-about-facts li,
+  .home-about-facts li::before,
+  .home-about-facts li > span:first-child,
+  .contact-section::after,
+  .contact-links a,
+  .contact-links a svg,
+  .form-field-btn {
+    transition-duration: 0.01ms !important;
+  }
+
+  .home-about-facts li::before {
+    transform: scaleX(1);
+  }
+}
+
+/* ==========================================================================
+   HOMEPAGE — LIVING SYSTEMS, responsive
+
+   The drawings are sized by the grid column they sit in, and both columns stop
+   being able to hold one below these widths. The form field is the exception:
+   it is a wide plate, so it only needs to lose its annotations, not its width.
+   ========================================================================== */
+
+@media (max-width: 1180px) {
+  /* Below this the left column cannot carry four numbered rows and the right
+     column cannot carry the diagram without shrinking the diagram's smallest
+     label under the site's annotation size. The diagram moves above the list,
+     because a reader arriving at METHOD meets the system before the list of
+     what it produces. */
+  .method-stage {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(30px, 5vh, 48px);
+  }
+  .living-process {
+    grid-column: 1 / -1;
+    order: -1;
+    width: 100%;
+    max-width: 460px;
+    margin-inline: auto;
+  }
+  .method-body {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 900px) {
+  .quiet-head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+  .quiet-head .quiet-line,
+  .quiet-head .quiet-note {
+    grid-column: 1 / -1;
+  }
+  .quiet-head .quiet-note {
+    padding-bottom: 0;
+  }
+  .form-field-head {
+    flex-wrap: wrap;
+    gap: 6px 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Below this the plate's own annotations are the first thing to go: the
+     drawing has to stay, the labels describing it can live in the caption. */
+  .form-field {
+    padding: 10px;
+  }
+  .form-field-head {
+    font-size: 9px;
+  }
+  .form-field-foot {
+    gap: 12px;
+  }
+  .form-field-caption {
+    max-width: none;
+  }
+  .form-field-mode {
+    min-width: 0;
+  }
+  .form-field-btn {
+    padding: 7px 10px;
+    font-size: 9px;
+  }
+  .living-process {
+    padding: 10px;
+  }
+  .living-process-head {
+    font-size: 9px;
   }
 }

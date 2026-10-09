@@ -1,0 +1,19 @@
+[
+  "wait:2500",
+  "assert:measure=JSON.stringify((()=>{const r=e=>{const b=e.getBoundingClientRect();return {t:Math.round(b.top+scrollY),h:Math.round(b.height),w:Math.round(b.width)}};return {disc:r(document.querySelector('.method-disc')),tools:r(document.querySelector('.method-tools')),head:r(document.querySelector('.method-head')),note:r(document.querySelector('.method-note')),manifestoBody:r(document.querySelector('.manifesto-body')),quietLine:r(document.querySelector('.quiet-line'))};})())",
+  "assert:go1=(window.scrollTo(0,document.querySelector('.manifesto').getBoundingClientRect().top+scrollY-60),'practice')",
+  "wait:700",
+  "shot:base-practice",
+  "assert:go2=(window.scrollTo(0,document.querySelector('.method').getBoundingClientRect().top+scrollY-60),'method')",
+  "wait:700",
+  "shot:base-method",
+  "assert:go3=(window.scrollTo(0,document.querySelector('.quiet').getBoundingClientRect().top+scrollY-60),'quiet')",
+  "wait:700",
+  "shot:base-quiet",
+  "assert:go4=(window.scrollTo(0,document.querySelector('.home-about').getBoundingClientRect().top+scrollY-60),'about')",
+  "wait:700",
+  "shot:base-about",
+  "assert:go5=(window.scrollTo(0,document.querySelector('.contact-section').getBoundingClientRect().top+scrollY-40),'contact')",
+  "wait:700",
+  "shot:base-contact"
+]

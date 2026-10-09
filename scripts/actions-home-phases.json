@@ -1,0 +1,19 @@
+[
+  "wait:2500",
+  "assert:goField=(window.scrollTo(0,document.querySelector('.form-field').getBoundingClientRect().top+scrollY-120),'ok')",
+  "wait:1200",
+  "assert:p1=document.querySelector('.form-field-phase span').textContent",
+  "clip:ph-a=.form-field-canvas",
+  "wait:3150",
+  "assert:p2=document.querySelector('.form-field-phase span').textContent",
+  "clip:ph-b=.form-field-canvas",
+  "wait:3150",
+  "assert:p3=document.querySelector('.form-field-phase span').textContent",
+  "clip:ph-c=.form-field-canvas",
+  "wait:3150",
+  "assert:p4=document.querySelector('.form-field-phase span').textContent",
+  "clip:ph-d=.form-field-canvas",
+  "wait:3150",
+  "assert:p5=document.querySelector('.form-field-phase span').textContent",
+  "clip:ph-e=.form-field-canvas"
+]

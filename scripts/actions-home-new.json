@@ -1,0 +1,13 @@
+[
+  "wait:2800",
+  "assert:hydrated=JSON.stringify([...document.querySelectorAll('*')].filter(e=>Object.keys(e).some(k=>k.indexOf('__reactFiber')===0)).length)",
+  "assert:geom=JSON.stringify((()=>{const r=e=>{const b=e.getBoundingClientRect();return {t:Math.round(b.top+scrollY),h:Math.round(b.height),w:Math.round(b.width)}};return {docH:document.documentElement.scrollHeight,overflowX:document.documentElement.scrollWidth-document.documentElement.clientWidth,method:document.querySelector('.method')?r(document.querySelector('.method')):null,methodStage:r(document.querySelector('.method-stage')),methodBody:r(document.querySelector('.method-body')),living:r(document.querySelector('.living-process')),livingCanvas:r(document.querySelector('.living-process-canvas')),quiet:r(document.querySelector('.quiet')),quietHead:r(document.querySelector('.quiet-head')),formField:r(document.querySelector('.form-field')),about:r(document.querySelector('.home-about')),contact:r(document.querySelector('.contact-section'))};})())",
+  "assert:go1=(window.scrollTo(0,document.querySelector('.method-stage').getBoundingClientRect().top+scrollY-120),'methodStage')",
+  "wait:900",
+  "shot:new-method",
+  "clip:clip-living=.living-process",
+  "assert:go2=(window.scrollTo(0,document.querySelector('.form-field').getBoundingClientRect().top+scrollY-140),'formField')",
+  "wait:1400",
+  "shot:new-rules",
+  "clip:clip-field=.form-field"
+]
