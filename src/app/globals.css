@@ -4866,6 +4866,20 @@ th {
   display: block;
   will-change: transform;
 }
+/* A hairline that draws from the left. PART 14's "a small amount of line
+   reveal" taken literally: the rule is the thing that moves, never the text. */
+.rule-reveal {
+  display: block;
+  width: 100%;
+}
+.rule-reveal-line {
+  display: block;
+  height: 1px;
+  background: var(--ink);
+  opacity: 0.24;
+  transform-origin: left;
+  will-change: transform;
+}
 
 /* ==========================================================================
    01 鐠?HERO 闁?the positioning statement over a live parametric field
@@ -5041,176 +5055,6 @@ th {
   font-size: 10px;
   letter-spacing: var(--tracking-meta);
   color: var(--muted);
-}
-
-/* ==========================================================================
-   02 鐠?MANIFESTO 闁?dense, sets the vocabulary
-   ========================================================================== */
-
-.manifesto {
-  padding-top: var(--space-chapter);
-  padding-bottom: var(--space-chapter);
-}
-.manifesto-statement {
-  font-family: var(--font-display);
-  font-size: var(--t-chapter);
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: var(--tracking-display);
-  margin: clamp(24px, 4vh, 56px) 0 0;
-}
-.manifesto-body {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--grid-gap);
-  margin-top: clamp(40px, 7vh, 96px);
-  padding-top: var(--space-dense);
-  border-top: var(--rule);
-}
-.manifesto-lead {
-  grid-column: 1 / 5;
-  font-size: var(--t-editorial);
-  line-height: 1.24;
-  letter-spacing: -0.02em;
-  text-wrap: pretty;
-}
-.manifesto-body > p:last-child {
-  grid-column: 7 / 12;
-  color: #5f5f59;
-  font-size: var(--t-body);
-  line-height: 1.85;
-  text-wrap: pretty;
-}
-
-/* ==========================================================================
-   03 鐠?METHOD 闁?the technical register
-   ========================================================================== */
-
-.method {
-  padding-top: var(--space-quiet);
-  padding-bottom: var(--space-chapter);
-}
-.method-head {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--grid-gap);
-  align-items: end;
-  padding: clamp(24px, 4vh, 52px) 0 clamp(36px, 6vh, 76px);
-}
-.method-title {
-  grid-column: 1 / 8;
-  font-family: var(--font-display);
-  font-size: var(--t-chapter);
-  font-weight: 500;
-  line-height: 0.98;
-  letter-spacing: var(--tracking-display);
-}
-.method-note {
-  grid-column: 9 / 13;
-  color: #5f5f59;
-  font-size: var(--t-body);
-  line-height: 1.8;
-  text-wrap: pretty;
-}
-.method-chain {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: var(--rule);
-}
-.method-chain li {
-  display: grid;
-  grid-template-columns: 56px 148px minmax(0, 1fr);
-  gap: var(--grid-gap);
-  align-items: baseline;
-  padding: 13px 0;
-  border-bottom: var(--rule);
-  transition: background 0.4s var(--ease-out);
-}
-.method-chain li:hover {
-  background: var(--panel);
-}
-.method-chain-index {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: var(--tracking-meta);
-}
-.method-chain-id {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  letter-spacing: var(--tracking-meta);
-}
-.method-chain-detail {
-  color: #5f5f59;
-  font-size: 14px;
-}
-/* The method's two registers — the rule chains and the tool register — used to
-   share one twelve-column row with the disciplines. They now stack in a single
-   left column so the right half of the section can hold the running diagram;
-   the column spans they inherited are reset by .method-body. */
-.method-disc {
-  grid-column: 1 / 8;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.method-disc li {
-  display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) auto;
-  gap: 6px var(--grid-gap);
-  align-items: baseline;
-  padding: 18px 0 20px;
-  border-bottom: var(--rule);
-}
-.method-disc-index {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--muted);
-}
-.method-disc-name {
-  font-size: var(--t-title);
-  letter-spacing: -0.03em;
-  line-height: 1.2;
-}
-.method-disc-detail {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-  white-space: nowrap;
-}
-/* The rule chain is the claim; the sentence underneath is why it holds. This
-   text was already in the data and unused. */
-.method-disc-note {
-  grid-column: 2 / 3;
-  color: #3d3d38;
-  font-size: 15px;
-  line-height: 1.65;
-  max-width: 46ch;
-  text-wrap: pretty;
-}
-.method-tools {
-  grid-column: 9 / 13;
-  margin: 0;
-}
-.method-tools > div {
-  padding: 14px 0;
-  border-bottom: var(--rule);
-}
-.method-tools dt {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: var(--tracking-meta);
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 7px;
-}
-.method-tools dd {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.7;
-  color: #4a4a45;
 }
 
 /* ==========================================================================
@@ -5847,41 +5691,56 @@ th {
   line-height: 1;
   letter-spacing: -0.03em;
 }
+/* Six columns rather than five. The paragraph was a display-size block in a
+   five-column measure — about thirteen Chinese characters a line — which is a
+   measure tuned for a headline, not for prose, and it is why the block read as
+   five stacked slabs instead of a paragraph. */
 .home-about-body {
-  grid-column: 7 / 12;
+  grid-column: 7 / 13;
 }
+/* PART 14 calls this a reading buffer, and PART 16 asks for an actual reading
+   size. This was --t-editorial (up to 50px) at line-height 1.34, which is a
+   display treatment: at that size the CJK lines were close enough to touch, and
+   the block outweighed the RULES study it is supposed to follow. Reading size,
+   CJK leading, and a measure that lets the line breathe. */
 .home-about-body > p {
-  color: #3d3d38;
-  font-size: var(--t-editorial);
-  line-height: 1.34;
-  letter-spacing: -0.018em;
+  color: #3a3a35;
+  font-size: clamp(17px, 1.22vw, 20px);
+  line-height: 1.88;
+  letter-spacing: -0.004em;
+  max-width: 30em;
   text-wrap: pretty;
+}
+.home-about-rule {
+  margin-top: clamp(30px, 4.4vh, 56px);
 }
 .home-about-facts {
   list-style: none;
-  margin: clamp(28px, 4vh, 52px) 0 clamp(28px, 4vh, 44px);
+  margin: 0 0 clamp(28px, 4vh, 44px);
   padding: 0;
 }
 .home-about-facts li {
   display: grid;
-  grid-template-columns: 92px minmax(0, 1fr);
+  grid-template-columns: 108px minmax(0, 1fr);
   gap: var(--grid-gap);
   align-items: baseline;
+  padding: 13px 0;
   border-top: 1px solid rgba(17, 17, 17, 0.16);
-  font-size: 14px;
-  /* Ink, not lime. The progress rule under the device is the one "you are
-     here" signal in this chapter; a second lime marker beside the text made
-     three of them visible at once. */
-  background: var(--ink);
+  /* Ink on paper. This carried `background: var(--ink)` with a comment about
+     ink markers, and the result was three rows of #4a4a45 text on #111111 —
+     roughly 1.5:1, effectively invisible, on the one element a reader uses to
+     find out what the person is looking for. The hover rule above it is the
+     "you are here" signal; it never needed a black plate behind the text. */
+  color: var(--ink);
 }
 .home-about-facts li:last-child {
   border-bottom: var(--rule);
 }
 .home-about-facts li > span:last-child {
   font-family: var(--font-mono);
-  font-size: 11.5px;
-  letter-spacing: 0.02em;
-  color: #4a4a45;
+  font-size: 13px;
+  letter-spacing: 0.005em;
+  color: #35352f;
 }
 
 /* ==========================================================================
@@ -5920,26 +5779,11 @@ th {
 }
 
 @media (max-width: 1100px) {
-  .method-note {
-    grid-column: 7 / 13;
-  }
-  .method-disc {
-    grid-column: 1 / 8;
-  }
-  .method-tools {
-    grid-column: 8 / 13;
-  }
   .works-title {
     grid-column: 1 / 9;
   }
   .works-head-aside {
     grid-column: 9 / 13;
-  }
-  .manifesto-lead {
-    grid-column: 1 / 6;
-  }
-  .manifesto-body > p:last-child {
-    grid-column: 6 / 13;
   }
   .home-about-title {
     grid-column: 1 / 6;
@@ -6029,21 +5873,6 @@ th {
   .works-head-aside,
   .home-about-body {
     margin-top: 22px;
-  }
-  .method-chain li {
-    grid-template-columns: 34px minmax(0, 1fr);
-    row-gap: 4px;
-  }
-  .method-chain-detail {
-    grid-column: 2 / -1;
-  }
-  .method-disc li {
-    grid-template-columns: 34px minmax(0, 1fr);
-    row-gap: 4px;
-  }
-  .method-disc-detail {
-    grid-column: 2 / -1;
-    white-space: normal;
   }
 
   .chapter {
@@ -11472,6 +11301,78 @@ th {
   color: var(--muted);
 }
 
+/* ---- the two new scenes, narrow ----------------------------------------- */
+/* The twelve-column stage was written against a desktop measure and never
+   collapsed. At 390 the copy kept five of twelve columns — 130px, about eight
+   Chinese characters a line — while the sculpture kept seven and rendered at
+   199x126, which reduced the section's main visual to a postage stamp. At 720
+   the two-column measure still holds, so the stack starts there and not at the
+   tablet breakpoint. */
+@media (max-width: 720px) {
+  .practice-stage {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(30px, 5vw, 44px);
+  }
+  .practice-copy,
+  .practice-visual {
+    grid-column: 1 / -1;
+  }
+  /* --t-editorial bottoms out at 24px, which on a phone leaves the statement
+     with no authority at all next to a full-bleed heading above it. */
+  .practice-lead {
+    font-size: clamp(26px, 7.2vw, 34px);
+  }
+  .practice-body,
+  .practice-note,
+  .rules-caption {
+    max-width: none;
+  }
+  /* 15px is fine for a mono annotation and thin for Chinese prose. */
+  .practice-note {
+    font-size: 16px;
+  }
+  /* Absolutely placed against the frame's bottom edge, which on a stacked
+     column is the bottom edge of the phone. */
+  .practice-annot {
+    position: static;
+    margin-top: 14px;
+  }
+  /* The four-phase legend sits in the bottom-right corner of .rules and the
+     caption flows across the full width underneath it. On a desktop measure the
+     caption stops at 52ch and never reaches; at 390 it does, and the two run
+     through each other. Into the flow, right-aligned, they stack instead. */
+  .rules-annot {
+    position: static;
+    display: block;
+    margin-top: 14px;
+    text-align: right;
+  }
+  /* A discipline row is four tracks: index, name, the rule chain, and the
+     argument. The chain is `nowrap` and the note is capped at 30ch, so the two
+     of them together need more than a phone has — the tracks collapsed and the
+     name printed straight through the chain. On one column the row becomes
+     index + name, then the chain, then the argument. */
+  .practice-item {
+    grid-template-columns: 34px minmax(0, 1fr);
+    row-gap: 9px;
+    padding: 18px 10px 20px;
+    margin: 0 -10px;
+    width: calc(100% + 20px);
+  }
+  .practice-item-detail,
+  .practice-item-note {
+    grid-column: 2 / -1;
+  }
+  .practice-item-detail {
+    white-space: normal;
+  }
+  /* Four tool groups across 350px is four columns of four characters. */
+  .practice-tools {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 26px;
+  }
+}
+
 /* ---- the no-WebGL elevation --------------------------------------------- */
 
 .vault-drawing {
@@ -11564,34 +11465,79 @@ th {
   overflow: hidden;
 }
 
-/* One hairline in the empty band between the headline and the entries, drawn
-   from the left when a contact channel is engaged — a connector to the entry
-   row rather than another panel of equally loud buttons. Anchored to the bottom
-   of the section, not to a percentage of its height: the headline wraps
-   differently at every breakpoint, and a rule that lands on the type at one
-   width is worse than no rule at all. */
-.contact-section::after {
+/* PART 15. Seven hairlines, one pointer, no model. The travel is eighteen
+   pixels because the brief asks for "very few thin lines" — enough to prove the
+   section is alive, not enough to compete with the headline above it. Each line
+   carries its own lean so the field parts rather than slides as one plate. */
+.contact-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+.contact-field-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--paper);
+  will-change: transform;
+}
+
+/* One hairline in the empty band between the sentence and the entries, drawn
+   from the left when a channel is engaged — a connector to the entry row rather
+   than another panel of equally loud buttons.
+   It hangs off .contact-links, not off the section. The section-level version
+   anchored to a `--contact-rule-y` offset guessed at 74px, and the headline wraps
+   to a different number of lines at every breakpoint — a rule that lands on the
+   type at one width is worse than no rule at all. Anchored to the rows it can
+   only ever land in the gap above them. */
+.contact-links {
+  position: relative;
+}
+.contact-links::before {
   content: "";
   position: absolute;
-  left: var(--gutter);
-  right: var(--gutter);
-  bottom: var(--contact-rule-y, 74px);
+  left: 0;
+  right: 0;
+  top: -18px;
   height: 1px;
-  background: rgba(242, 242, 239, 0.18);
+  background: rgba(242, 242, 239, 0.26);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
-  z-index: -1;
 }
 
-.contact-section:has(.contact-links a:hover)::after,
-.contact-section:has(.contact-links a:focus-visible)::after {
+.contact-section:has(.contact-links a:hover)::before,
+.contact-section:has(.contact-links a:focus-visible)::before,
+.contact-section:hover .contact-links::before {
   transform: scaleX(1);
 }
 
+/* The per-entry indicator: text, then a rule that draws under it, then the
+   target. Drawn on focus as well as hover so the keyboard gets the same
+   confirmation the mouse does. */
 .contact-links a {
+  position: relative;
+  padding-bottom: 2px;
   transition: color 220ms var(--ease-out);
+}
+.contact-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 22px;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 380ms var(--ease-out);
+}
+.contact-links a:hover::after,
+.contact-links a:focus-visible::after {
+  transform: scaleX(1);
 }
 
 .contact-links a:hover svg {
@@ -11659,53 +11605,25 @@ th {
   }
 
   /* The two drawings stop moving by JavaScript, not by CSS — the clock is never
-     started under reduced motion, and one settled frame is drawn instead. What
-     is left to silence here is the hover and focus feedback on the surrounding
-     controls, which is state, not movement. */
+     started under reduced motion, and one settled frame is drawn instead. The
+     contact field does the same. What is left to silence here is the hover and
+     focus feedback on the surrounding controls, which is state, not movement. */
   .method-disc li,
   .method-disc li > span,
-  .home-about-facts li,
   .home-about-facts li::before,
   .home-about-facts li > span:first-child,
-  .contact-section::after,
-  .contact-links a,
-  .contact-links a svg,
-  .form-field-btn {
+  .contact-links::before,
+  .contact-links a::after {
+    transform: scaleX(1);
     transition-duration: 0.01ms !important;
   }
 
-  .home-about-facts li::before {
-    transform: scaleX(1);
-  }
-}
-
-/* ==========================================================================
-   HOMEPAGE — LIVING SYSTEMS, responsive
-
-   The drawings are sized by the grid column they sit in, and both columns stop
-   being able to hold one below these widths. The form field is the exception:
-   it is a wide plate, so it only needs to lose its annotations, not its width.
-   ========================================================================== */
-
-@media (max-width: 1180px) {
-  /* Below this the left column cannot carry four numbered rows and the right
-     column cannot carry the diagram without shrinking the diagram's smallest
-     label under the site's annotation size. The diagram moves above the list,
-     because a reader arriving at METHOD meets the system before the list of
-     what it produces. */
-  .method-stage {
-    grid-template-columns: minmax(0, 1fr);
-    gap: clamp(30px, 5vh, 48px);
-  }
-  .living-process {
-    grid-column: 1 / -1;
-    order: -1;
-    width: 100%;
-    max-width: 460px;
-    margin-inline: auto;
-  }
-  .method-body {
-    grid-column: 1 / -1;
+  /* The field itself is dead JS-wise, so the hairlines only need to stop
+     drifting on their last frame rather than be hidden: they are structure, and
+     hiding them would remove the field rather than calm it. */
+  .contact-field-line {
+    transform: none !important;
+    will-change: auto;
   }
 }
 
@@ -11720,39 +11638,5 @@ th {
   }
   .quiet-head .quiet-note {
     padding-bottom: 0;
-  }
-  .form-field-head {
-    flex-wrap: wrap;
-    gap: 6px 16px;
-  }
-}
-
-@media (max-width: 640px) {
-  /* Below this the plate's own annotations are the first thing to go: the
-     drawing has to stay, the labels describing it can live in the caption. */
-  .form-field {
-    padding: 10px;
-  }
-  .form-field-head {
-    font-size: 9px;
-  }
-  .form-field-foot {
-    gap: 12px;
-  }
-  .form-field-caption {
-    max-width: none;
-  }
-  .form-field-mode {
-    min-width: 0;
-  }
-  .form-field-btn {
-    padding: 7px 10px;
-    font-size: 9px;
-  }
-  .living-process {
-    padding: 10px;
-  }
-  .living-process-head {
-    font-size: 9px;
   }
 }

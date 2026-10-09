@@ -639,7 +639,14 @@ export type SculptureTuning = {
 };
 
 export const PRACTICE_TUNING: SculptureTuning = {
-  length: 3.7,
+  /* 4.6, not 3.7. The stage is wide and short, and the camera frames to the
+     vertical extent, so a short object keeps its crown while losing width and
+     reads as a dome rather than as the same vault the RULES study shows. The
+     study's ratio is 1.35 of crown against 5 of span; 3.7 put the practice form
+     at 0.40, which is a tent. Length is the cheapest way to restore the
+     silhouette, and it costs nothing in the family — the surface function is
+     normalised, so this is a footprint, not a different object. */
+  length: 4.6,
   distance: 0.5,
   ribs: 13,
   ribStations: 26,

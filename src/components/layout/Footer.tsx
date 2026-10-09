@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ArrowUp, ArrowUpRight, Phone } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { site } from "@/data/site";
+import { MaskReveal } from "@/components/motion/MaskReveal";
+import { ContactField } from "@/components/home/ContactField";
 
 type Channel = {
   name: string;
@@ -46,15 +48,23 @@ export function Contact({ compact = false }: { compact?: boolean }) {
       id="contact"
       className={`contact-section section-shell ${compact ? "compact-contact" : ""}`}
     >
+      {/* PART 15: the field is the only moving part down here, and it is nine
+          pixels of lean on seven hairlines. It sits behind everything, takes no
+          pointer events, and is skipped entirely under reduced motion. */}
+      <ContactField />
       <div className="section-kicker">
         <span>GET IN TOUCH</span>
         <span>GUILIN, CHINA ↗</span>
       </div>
-      <h2>
-        LET’S CREATE
-        <br />
-        <span className="muted">SOMETHING.</span>
-      </h2>
+      {/* A mask, not a per-letter bounce. The two lines rise out of their own
+          boxes as one block of type, which is the only entrance that keeps a
+          208px headline from reading as a slideshow. */}
+      <MaskReveal
+        as="h2"
+        className="contact-title"
+        lines={["LET’S CREATE", <span key="muted" className="muted">SOMETHING.</span>]}
+        stagger={0.11}
+      />
       <div className="contact-bottom">
         <p>
           关于设计系统、AI 工作流，

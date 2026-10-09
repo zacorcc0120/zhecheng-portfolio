@@ -1,0 +1,19 @@
+[
+  "wait:2600",
+  "assert:geo=JSON.stringify([...document.querySelectorAll('main > section, .practice-section, .practice-statement, .sculpture-practice, .practice-domains')].map(e=>{const r=e.getBoundingClientRect();return [e.className.split(' ').slice(0,2).join('.'), Math.round(r.top+scrollY), Math.round(r.height), Math.round(r.width)]}))",
+  "assert:p0=(window.scrollTo(0,document.querySelector('.sculpture-practice').getBoundingClientRect().top+scrollY-260),'r')",
+  "wait:1700",
+  "shot:02-practice",
+  "assert:p1=(window.scrollTo(0,document.querySelector('.sculpture-practice').getBoundingClientRect().top+scrollY-120),'r')",
+  "wait:1500",
+  "shot:02b-practice-close",
+  "assert:g2=(window.scrollTo(0,document.querySelector('.quiet').getBoundingClientRect().top+scrollY),'r')",
+  "wait:1700",
+  "shot:03-rules",
+  "assert:g3=(window.scrollTo(0,document.querySelector('.home-about').getBoundingClientRect().top+scrollY),'r')",
+  "wait:1400",
+  "shot:04-about",
+  "assert:g4=(window.scrollTo(0,document.body.scrollHeight),'r')",
+  "wait:1700",
+  "shot:05-contact"
+]

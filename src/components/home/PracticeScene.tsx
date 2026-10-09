@@ -5,12 +5,13 @@ import { useInView } from "framer-motion";
 import { disciplines, skills } from "@/data/site";
 import {
   DOMAIN_KEYS,
+  lerp,
   readDomains,
   sculptBreathe,
   type SculptParams,
 } from "@/lib/sculpture";
 import { MaskReveal } from "@/components/motion/MaskReveal";
-import { SculptureStage } from "./SculptureStage";
+import { SculptureStage, REST } from "./SculptureStage";
 import { PRACTICE_TUNING } from "./SculptureScene";
 
 /**
@@ -32,6 +33,16 @@ import { PRACTICE_TUNING } from "./SculptureScene";
 const DOMAIN_LABEL = ["01", "02", "03", "04"];
 const DRIFT_PERIOD = 34000; // seconds for a full pass through the four domains
 const REVEAL_FRAMES = 165; // ≈2.7s of the form lifting out of its grid
+/**
+ * Where the drift cycle is when the stage first draws.
+ *
+ * The stage opens its settled frame at REST and the clock starts there, so the
+ * first reading a reader sees — and the only one they see under reduced motion,
+ * where nothing ever ticks — has to be the reading the live cycle opens on too.
+ * Starting somewhere else meant the frozen still was a pose the moving object
+ * never actually rests at.
+ */
+const START_MIX = (REST / DRIFT_PERIOD) * DOMAIN_KEYS.length;
 
 export function PracticeScene() {
   const section = useRef<HTMLElement>(null);
@@ -42,7 +53,7 @@ export function PracticeScene() {
   const [focus, setFocus] = useState(-1);
   const [held, setHeld] = useState(-1);
 
-  const mix = useRef(0.55);
+  const mix = useRef(START_MIX);
   const frames = useRef(0);
   const revealRef = useRef(0);
   // Derived, not latched into state: an effect that calls setState here would
@@ -82,7 +93,14 @@ export function PracticeScene() {
       fold: r.fold * b.fold,
       close: r.close * b.close,
       lattice: r.lattice,
-      surface: 1,
+      /* The readings carry their own membrane weight and this flattened it to a
+         solid 1, which is what made the practice form read as a rolled sheet of
+         paper: at full opacity the membrane covers the ribs, and the ribs are
+         the whole reason the object looks like architecture. Compressed into a
+         0.3–0.74 band — never a skeleton, never a shell you cannot see into —
+         so the structure stays legible at every domain and the four readings
+         still separate. */
+      surface: lerp(0.3, 0.74, r.surface),
     };
   }, [armed]);
 
@@ -119,16 +137,12 @@ export function PracticeScene() {
 
       <div className="practice-stage">
         <div className="practice-copy">
+          {/* One source line each on purpose. JSX folds a newline between two
+              runs of text into a single space, which is invisible between Latin
+              words and a visible gap in the middle of a Chinese sentence. */}
           <p className="practice-lead">我把设计看成一套可以运行的系统，而不是一组界面。</p>
-          <p className="practice-body">
-            从桂北传统民居的生成式参数化工作流，到微信小程序里的时间记录与日常回顾，
-            再到晶格结构与鼓楼形制的规则提取——对象不同，但都在做同一件事：
-            把模糊的需求变成可命名、可调整的参数，交给系统去生成，再回到人的判断。
-          </p>
-          <p className="practice-note">
-            下面四个领域不是四个项目类别，而是同一套生成系统的四组读数。
-            指向其中一个，右侧的形态会连续地变过去。
-          </p>
+          <p className="practice-body">从桂北传统民居的生成式参数化工作流，到微信小程序里的时间记录与日常回顾，再到晶格结构与鼓楼形制的规则提取——对象不同，但都在做同一件事：把模糊的需求变成可命名、可调整的参数，交给系统去生成，再回到人的判断。</p>
+          <p className="practice-note">下面四个领域不是四个项目类别，而是同一套生成系统的四组读数。指向其中一个，右侧的形态会连续地变过去。</p>
         </div>
 
         <div className="practice-visual">

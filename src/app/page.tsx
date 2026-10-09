@@ -10,6 +10,7 @@ import { RuleIndexDivider } from "@/components/home/RuleIndexDivider";
 import { ChapterMarkDivider } from "@/components/home/ChapterMarkDivider";
 import { WorksIndex } from "@/components/home/WorksIndex";
 import { MaskReveal, MaskBlock } from "@/components/motion/MaskReveal";
+import { RuleReveal } from "@/components/motion/RuleReveal";
 
 export default function Home() {
   return (
@@ -85,10 +86,12 @@ export default function Home() {
             lines={["关于我"]}
           />
           <div className="home-about-body">
-            <p>
-              广西师范大学设计学研究生。长期在做参数化建模与数字产品，
-              习惯把设计过程写下来：用了什么规则、为什么这样取舍、结果如何被验证。
-            </p>
+            {/* One source line on purpose. JSX collapses a newline between two
+                runs of text into a single space, which is invisible between
+                Latin words and a visible gap in the middle of a Chinese
+                sentence. */}
+            <p>广西师范大学设计学研究生。长期在做参数化建模与数字产品，习惯把设计过程写下来：用了什么规则、为什么这样取舍、结果如何被验证。</p>
+            <RuleReveal className="home-about-rule" />
             <ul className="home-about-facts">
               <li>
                 <span className="meta-key">FOCUS</span>

@@ -54,10 +54,15 @@ function findChrome() {
 }
 
 const profile = mkdtempSync(join(tmpdir(), "act-"));
+/* NO_WEBGL=1 launches the browser with WebGL switched off, which is the only
+   honest way to see what a reader without it gets. The fallback path is the
+   whole point of having one, so it has to be looked at rather than assumed. */
 const chrome = spawn(findChrome(), [
   "--headless=new", "--remote-debugging-port=0", `--user-data-dir=${profile}`,
   "--no-first-run", "--no-default-browser-check", "--hide-scrollbars", "--mute-audio",
-  "--disable-extensions", "--force-device-scale-factor=1", "about:blank",
+  "--disable-extensions", "--force-device-scale-factor=1",
+  ...(process.env["NO_WEBGL"] === "1" ? ["--disable-webgl", "--disable-webgl2"] : []),
+  "about:blank",
 ], { stdio: ["ignore", "ignore", "pipe"] });
 function bail(err) {
   console.error(`act: ${err}`);
@@ -183,6 +188,17 @@ async function click(selector) {
   console.log(`  已点击 ${selector} @ (${Math.round(pt.x)}, ${Math.round(pt.y)})`);
 }
 
+async function hover(x, y, repeats = 6) {
+  // A synthetic MouseEvent does not set :hover, so every CSS hover state has to
+  // be driven with a real input event. Several moves in a row, not one: the
+  // damped pointer fields need a few frames of history before they settle.
+  for (let i = 0; i < repeats; i++) {
+    await cdp("Input.dispatchMouseEvent", { type: "mouseMoved", x, y, buttons: 0 });
+    await sleep(90);
+  }
+  console.log(`  已悬停 (${Math.round(x)}, ${Math.round(y)})`);
+}
+
 console.log(`视口 ${w}x${h}`);
 for (const a of actions) {
   const colon = a.indexOf(":");
@@ -191,6 +207,10 @@ for (const a of actions) {
   if (kind === "shot") await shoot(arg);
   else if (kind === "clip") { const i = arg.indexOf("="); await shoot(arg.slice(0, i), arg.slice(i + 1)); }
   else if (kind === "click") await click(arg);
+  else if (kind === "hover") {
+    const [hx, hy] = arg.split(",").map(Number);
+    await hover(hx, hy);
+  }
   else if (kind === "key") {
     const map = { Escape: 27, Enter: 13, ArrowRight: 39, ArrowLeft: 37, Tab: 9 };
     await cdp("Input.dispatchKeyEvent", { type: "keyDown", key: arg, code: arg, windowsVirtualKeyCode: map[arg] || 0 });

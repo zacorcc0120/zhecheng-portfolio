@@ -1,0 +1,20 @@
+[
+  "wait:2200",
+  "assert:goContact=(window.scrollTo(0,document.body.scrollHeight),'r')",
+  "wait:1800",
+  "assert:rest=JSON.stringify([...document.querySelectorAll('.contact-field-line')].map(n=>n.style.transform))",
+  "clip:contact-plumb=.contact-section",
+  "hover:200,300",
+  "wait:1400",
+  "assert:leaned=JSON.stringify([...document.querySelectorAll('.contact-field-line')].map(n=>n.style.transform))",
+  "clip:contact-lean-left=.contact-section",
+  "hover:1300,520",
+  "wait:1400",
+  "assert:leaned2=JSON.stringify([...document.querySelectorAll('.contact-field-line')].map(n=>n.style.transform))",
+  "clip:contact-lean-right=.contact-section",
+  "hover:1000,560",
+  "wait:1200",
+  "clip:contact-link-hover=.contact-section",
+  "assert:ruleScale=getComputedStyle(document.querySelector('.contact-links'),'::before').transform",
+  "assert:linkScale=getComputedStyle(document.querySelector('.contact-links a'),'::after').transform"
+]

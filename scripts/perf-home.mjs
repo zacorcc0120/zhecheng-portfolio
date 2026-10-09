@@ -77,14 +77,17 @@ async function sample(label, goto) {
   return after;
 }
 
+const to = (sel, back = 120) =>
+  `window.scrollTo(0,document.querySelector('${sel}').getBoundingClientRect().top+scrollY-${back})`;
+
 console.log(`视口 ${width}x${height}，采样窗口 ${SAMPLE_MS / 1000}s\n`);
 await sample("Hero（Hero Field 在跑）", "window.scrollTo(0,0)");
-await sample("METHOD（LivingProcess）", "window.scrollTo(0,document.querySelector('.method-stage').getBoundingClientRect().top+scrollY-120)");
-await sample("RULES（FormField）", "window.scrollTo(0,document.querySelector('.form-field').getBoundingClientRect().top+scrollY-120)");
+await sample("PRACTICE（雕塑在跑）", to(".sculpture-practice"));
+await sample("RULES（雕塑在跑）", to(".sculpture-study"));
 await sample("页脚（两图都离屏）", "window.scrollTo(0,document.documentElement.scrollHeight)");
 
-console.log("\n— 形态场长时间运行 40s，看堆与监听器是否漂移 —");
-await evaluate("window.scrollTo(0,document.querySelector('.form-field').getBoundingClientRect().top+scrollY-120)");
+console.log("\n— RULES 雕塑长时间运行 40s，看堆与监听器是否漂移 —");
+await evaluate(to(".sculpture-study"));
 await sleep(1200);
 const t0 = await metrics();
 for (let i = 0; i < 8; i++) {

@@ -1,0 +1,12 @@
+[
+  "wait:2200",
+  "assert:goAbout=(window.scrollTo(0,document.querySelector('.home-about').getBoundingClientRect().top+scrollY),'r')",
+  "wait:1400",
+  "clip:about=.home-about",
+  "assert:goContact=(window.scrollTo(0,document.body.scrollHeight),'r')",
+  "wait:1600",
+  "clip:contact=.contact-section",
+  "assert:hov=(document.querySelector('.contact-links a').dispatchEvent(new MouseEvent('mouseover',{bubbles:true})),'h')",
+  "wait:900",
+  "clip:contact-hover=.contact-section"
+]
