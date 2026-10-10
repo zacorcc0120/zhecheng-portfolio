@@ -9,7 +9,7 @@ import { RulesStudy } from "@/components/home/RulesStudy";
 import { RuleIndexDivider } from "@/components/home/RuleIndexDivider";
 import { ChapterMarkDivider } from "@/components/home/ChapterMarkDivider";
 import { WorksIndex } from "@/components/home/WorksIndex";
-import { MaskReveal, MaskBlock } from "@/components/motion/MaskReveal";
+import { MaskReveal } from "@/components/motion/MaskReveal";
 import { RuleReveal } from "@/components/motion/RuleReveal";
 
 export default function Home() {
@@ -35,10 +35,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 01 + 02 — PRACTICE and METHOD, fused into one scene. They were two
-          separate walls of type with a small instrument panel between them;
-          they are now a statement, a running form, and the four disciplines
-          that drive it. */}
+      {/* Four disciplines, indexed through real project artifacts. */}
       <PracticeScene />
 
       {/* The method's own rule chains become the project index. The rail that
@@ -51,27 +48,8 @@ export default function Home() {
       {/* Five projects, one method. Nothing else. */}
       <ChapterMarkDivider />
 
-      {/* Quiet, and no longer only type. The headline keeps the whole width it
-          had — it is the last thing the page says before it introduces the
-          person — and the generative field sits underneath it in the space the
-          section was already giving away. */}
-      <section className="quiet section-shell">
-        <div className="quiet-head">
-          <p className="quiet-line">
-            <MaskBlock duration={1.2}>
-              RULES INTO
-            </MaskBlock>
-            <MaskBlock delay={0.12} duration={1.2}>
-              POSSIBILITIES.
-            </MaskBlock>
-          </p>
-          <span className="quiet-note meta-key">
-            方法先于形式 / METHOD BEFORE FORM
-          </span>
-        </div>
-
-        <RulesStudy />
-      </section>
+      {/* Source-model construction layers connect rules to physical form. */}
+      <RulesStudy />
 
       <section className="home-about section-shell">
         <div className="section-kicker">
@@ -90,7 +68,9 @@ export default function Home() {
                 runs of text into a single space, which is invisible between
                 Latin words and a visible gap in the middle of a Chinese
                 sentence. */}
-            <p>广西师范大学设计学研究生。长期在做参数化建模与数字产品，习惯把设计过程写下来：用了什么规则、为什么这样取舍、结果如何被验证。</p>
+            <p>
+              广西师范大学设计学研究生。长期在做参数化建模与数字产品，习惯把设计过程写下来：用了什么规则、为什么这样取舍、结果如何被验证。
+            </p>
             <RuleReveal className="home-about-rule" />
             <ul className="home-about-facts">
               <li>
