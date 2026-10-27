@@ -9,12 +9,16 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: { default: site.title, template: "%s — Zhecheng Cao" },
   description: site.description,
+  // The home page had no canonical of its own, so the root layout supplies
+  // one. Child pages override it with their own path.
+  alternates: { canonical: "/" },
   openGraph: {
     title: site.title,
     description: site.description,
     type: "website",
     locale: "en_US",
     siteName: "Zhecheng Cao",
+    url: "/",
   },
   twitter: {
     card: "summary",

@@ -37,11 +37,26 @@ jobs:
       - run: npm run build
         env:
           NEXT_OUTPUT_EXPORT: "1"
-          NEXT_PUBLIC_BASE_PATH: "/zhecheng-portfolio"
-          NEXT_PUBLIC_SITE_URL: "https://zacorcc0120.github.io/zhecheng-portfolio"
+          # The repo owns zhecheng-portfolio.site, so the site is served from
+          # the root of that domain. NEXT_PUBLIC_BASE_PATH must stay unset
+          # here: with it set, Next rewrites every asset URL to
+          # /zhecheng-portfolio/_next/... and the site 404s on its own domain.
+          NEXT_PUBLIC_SITE_URL: "https://zhecheng-portfolio.site"
 
       # out/ copies all of public/, including plates no page references.
       - run: node scripts/prune-static-output.mjs out
+
+      # GitHub Pages reads the custom domain from a CNAME file at the root of
+      # the published artifact. Without it the deploy is published under
+      # <user>.github.io/<repo> instead of on the domain.
+      #
+      # .nojekyll stops Pages from running Jekyll over the artifact. Jekyll
+      # skips every path that starts with "_", which would delete _next/ — the
+      # directory that carries the CSS and JS.
+      - name: Write Pages marker files
+        run: |
+          echo zhecheng-portfolio.site > out/CNAME
+          touch out/.nojekyll
 
       - uses: actions/configure-pages@v5
 

@@ -16,7 +16,15 @@ export const site = {
   github: null as string | null,
   linkedin: null as string | null,
   resume: "/resume/zhecheng-cao-resume.pdf" as string | null,
-  url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  // The origin every absolute URL on the site is built from: sitemap, robots,
+  // canonical, og:url. Localhost is the dev fallback only — a production build
+  // that forgets NEXT_PUBLIC_SITE_URL would otherwise publish sitemap and
+  // canonical URLs pointing at localhost, which no crawler can follow.
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://zhecheng-portfolio.site"),
 };
 
 export const disciplines = [

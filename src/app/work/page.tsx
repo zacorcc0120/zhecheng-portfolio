@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Selected Works",
   description:
     "Projects in digital product design, parametric architecture and lattice structures by Zhecheng Cao.",
+  alternates: { canonical: "/work" },
 };
 
 export default function Work() {

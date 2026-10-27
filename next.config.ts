@@ -10,10 +10,13 @@ const nextConfig: NextConfig = {
   // Static hosts get a directory per route; this is what makes `/work` resolve
   // as a directory instead of relying on Pages' extension-less fallback.
   ...(isPages ? { output: "export" as const, trailingSlash: true } : {}),
-  // GitHub Pages serves this repo at /zhecheng-portfolio while it uses the
-  // default *.github.io host. Once the repo owns zhecheng-portfolio.site the
-  // site moves to the root and this must be empty, so it comes from the
-  // environment rather than being baked in.
+  // The repo owns zhecheng-portfolio.site, so GitHub Pages serves it from the
+  // root of that domain and every asset path stays absolute from "/".
+  //
+  // basePath exists here only as a fallback for serving the site from a
+  // subpath (e.g. <user>.github.io/<repo>). It must stay unset for the
+  // custom domain: with it set, Next rewrites every asset URL to
+  // <basePath>/_next/... and the site 404s on its own domain.
   ...(isPages && process.env.NEXT_PUBLIC_BASE_PATH
     ? { basePath: process.env.NEXT_PUBLIC_BASE_PATH }
     : {}),

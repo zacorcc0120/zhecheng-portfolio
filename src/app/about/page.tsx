@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Cao Zhecheng is a design graduate student at Guangxi Normal University exploring computation, artificial intelligence and parametric systems.",
+  alternates: { canonical: "/about" },
 };
 
 const FOCUS = [

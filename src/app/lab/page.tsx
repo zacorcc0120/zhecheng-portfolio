@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   // permissive: a Disallow here would stop crawlers fetching the page and they
   // would never see this tag in the first place.
   robots: { index: false, follow: false },
+  alternates: { canonical: "/lab" },
 };
 
 export default function Lab() {
