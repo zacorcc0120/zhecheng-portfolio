@@ -1,0 +1,22 @@
+# Binary assets must round-trip byte-exact.
+#
+# GitHub Pages publishes the exported artifact verbatim, so a PDF, WebP or
+# GLB that gets CRLF-rewritten on the way into the repository is corrupted
+# for every visitor. Without these lines the behaviour depends on git's
+# content sniffing plus core.autocrlf, which differs between a Windows
+# checkout and the Linux runner that performs the deploy.
+*.pdf binary
+*.webp binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.glb binary
+*.gltf binary
+*.mp4 binary
+*.woff2 binary
+*.woff binary
+*.ttf binary
+*.otf binary
+*.mp3 binary
+*.zip binary
